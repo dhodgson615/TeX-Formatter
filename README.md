@@ -20,5 +20,5 @@ The script performs the indentation in five distinct passes:
 To use the script, run it from the command line with the LaTeX file you want to format as an argument:
 
 ```bash
-python texformatter.py file.tex
+python3 texformatter.py file.tex
 ```
