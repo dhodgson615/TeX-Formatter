@@ -214,5 +214,4 @@ if __name__ == "__main__":
     with open(file_path, "r", encoding="utf-8") as f:
         latex_code: str = f.read()
 
-    formatted: str = indent_latex(latex_code)
-    print("\n\n" + formatted + "\n\n")
+    print("\n\n" + indent_latex(latex_code) + "\n\n")
