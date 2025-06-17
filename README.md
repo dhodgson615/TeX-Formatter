@@ -1,5 +1,5 @@
 # TeX-Formatter
-Python script that automatically formats .tex files based on my somewhat opinionated formatting style. It formats LaTeX source code by applying a series of indentation passes. Each pass handles a specific LaTeX construct (e.g., environments, chapters, sections, subsections, subsubsections) by adjusting the indentation level based on the hierarchy.
+Python script that automatically formats .tex files based on my somewhat opinionated formatting style. It formats LaTeX source code by applying a series of indentation passes. Each pass handles a specific LaTeX construct (e.g., environments, chapters, sections, subsections, subsubsections) by adjusting the indentation level based on the hierarchy so that the content is nested and visually easier to find.
 
 ## Functionality
 
