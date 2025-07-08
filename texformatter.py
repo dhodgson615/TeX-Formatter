@@ -10,7 +10,8 @@ from re import Match
 
 
 def pass1(lines: list[str]) -> list[str]:
-    """First Pass: Environment Indentation.  This function indents LaTeX
+    """
+    First Pass: Environment Indentation. This function indents LaTeX
     environments defined by \\begin{...} and \\end{...}. Indentation
     increases for \\begin and decreases for \\end.
     """
@@ -39,9 +40,10 @@ def pass1(lines: list[str]) -> list[str]:
 
 
 def pass2(lines: list[str]) -> list[str]:
-    """Second Pass: Chapter Indentation. Adjusts indentation for
-    \\chapter commands and their content. Lines within a chapter are
-    indented until a new chapter, section, or end of document.
+    """
+    Second Pass: Chapter Indentation. Adjusts indentation for \\chapter
+    commands and their content. Lines within a chapter are indented
+    until a new chapter, section, or end of document.
     """
     in_chapter: bool = False
     new_lines: list[str] = []
@@ -76,9 +78,10 @@ def pass2(lines: list[str]) -> list[str]:
 
 
 def pass3(lines: list[str]) -> list[str]:
-    """Third Pass: Section Indentation. Adjusts indentation for
-    \\section commands and their content. Lines within a section are
-    indented until a new chapter/section or end of document.
+    """
+    Third Pass: Section Indentation. Adjusts indentation for \\section
+    commands and their content. Lines within a section are indented
+    until a new chapter/section or end of document.
     """
     in_section: bool = False
     new_lines: list[str] = []
@@ -114,7 +117,8 @@ def pass3(lines: list[str]) -> list[str]:
 
 
 def pass4(lines: list[str]) -> list[str]:
-    """Fourth Pass: Subsection Indentation. Adjusts indentation for
+    """
+    Fourth Pass: Subsection Indentation. Adjusts indentation for
     \\subsection commands and their content. Lines within a subsection
     are indented until a new chapter/section/subsection or end of the
     document.
@@ -151,7 +155,8 @@ def pass4(lines: list[str]) -> list[str]:
 
 
 def pass5(lines: list[str]) -> list[str]:
-    """Fifth Pass: Subsubsection Indentation. Adjusts indentation for
+    """
+    Fifth Pass: Subsubsection Indentation. Adjusts indentation for
     \\subsubsection commands and their content. Lines within a
     subsubsection are indented until a new chapter, section, subsection,
     subsubsection or end of document.
@@ -194,7 +199,8 @@ def pass5(lines: list[str]) -> list[str]:
 
 
 def indent_latex(code: str) -> str:
-    """Main Function: Indent LaTeX Code. Applies all five indentation
+    """
+    Main Function: Indent LaTeX Code. Applies all five indentation
     passes sequentially to the input LaTeX code string. Returns the
     fully formatted LaTeX code.
     """
