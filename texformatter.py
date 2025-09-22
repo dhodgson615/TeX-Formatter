@@ -145,6 +145,7 @@ def pass4(lines: list[str]) -> list[str]:
 
             else:
                 new_indent = current_indent + 4
+
         else:
             new_indent = current_indent
 
