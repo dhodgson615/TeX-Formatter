@@ -204,7 +204,6 @@ class TestTexFormatter(unittest.TestCase):
         ]
 
         input_code = "\n".join(input_lines)
-
         result = texformatter.indent_latex(input_code, "  ")
         lines = result.split("\n")
 
