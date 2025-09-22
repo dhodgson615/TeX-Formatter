@@ -2,6 +2,7 @@
 passes. It handles environments, chapters, sections, subsections, and
 subsubsections. Usage: python3 texformatter.py input.tex [-i]"""
 
+from __future__ import annotations
 
 import argparse
 import re
