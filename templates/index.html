@@ -63,18 +63,10 @@
                 <div class="formatting-steps">
                     <h3>Formatting Process</h3>
                     <p>The formatter applies indentation through five distinct passes, each handling specific LaTeX constructs:</p>
-                    
-                    <ol>
-                        <li><strong>Environment Indentation:</strong> Handles LaTeX environments defined by <code>\begin{...}</code> and <code>\end{...}</code>. Content within environments is automatically indented to show the hierarchical structure.</li>
-                        
-                        <li><strong>Chapter Indentation:</strong> Indents content within <code>\chapter</code> commands. The indentation continues until another chapter, section, or document end is encountered.</li>
-                        
-                        <li><strong>Section Indentation:</strong> Similarly handles <code>\section</code> commands, creating visual hierarchy that makes document structure immediately apparent.</li>
-                        
-                        <li><strong>Subsection Indentation:</strong> Processes <code>\subsection</code> commands, maintaining consistent nesting levels throughout the document.</li>
-                        
-                        <li><strong>Subsubsection Indentation:</strong> Handles the finest level of sectioning with <code>\subsubsection</code> commands, ensuring even deeply nested content remains properly organized.</li>
-                    </ol>
+
+                    <p>
+                        The formatting process begins with Environment Indentation which handles LaTeX environments defined by <code>\begin{...}</code> and <code>\end{...}</code>. Content within environments is automatically indented to show the hierarchical structure. Next, Chapter Indentation indents content within <code>\chapter</code> commands. The indentation continues until another chapter, section, or document end is encountered. The third pass involves Section Indentation which similarly handles <code>\section</code> commands, creating visual hierarchy that makes document structure immediately apparent. Following this, Subsection Indentation processes <code>\subsection</code> commands, maintaining consistent nesting levels throughout the document. Finally, Subsubsection Indentation handles the finest level of sectioning with <code>\subsubsection</code> commands, ensuring even deeply nested content remains properly organized.
+                    </p>
                 </div>
 
                 <div class="technical-implementation">
