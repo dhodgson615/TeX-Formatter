@@ -9,13 +9,25 @@ document.addEventListener('DOMContentLoaded', () => {
         customRadio: document.querySelector('input[name="indent"][value="custom"]'),
         formatterSection: document.querySelector('.formatter-section'),
         controls: document.querySelector('.controls'),
-        inputSection: document.querySelector('.input-section')
+        inputSection: document.querySelector('.input-section'),
+        themeToggle: document.getElementById('theme-toggle'),
+        themeIcon: document.querySelector('.theme-icon')
     };
+
+    // Theme management
+    const themes = {
+        light: { icon: '🌙', label: 'Switch to dark mode' },
+        dark: { icon: '☀️', label: 'Switch to light mode' }
+    };
+
+    // Initialize theme
+    initializeTheme();
 
     // Event listeners
     elements.formatBtn.addEventListener('click', formatLatex);
     elements.copyBtn.addEventListener('click', copyToClipboard);
     elements.input.addEventListener('input', updateButtonStates);
+    elements.themeToggle.addEventListener('click', toggleTheme);
 
     // Custom spaces input handling
     ['focus', 'input'].forEach(event => {
@@ -172,6 +184,45 @@ E = mc^2
         // Ctrl/Cmd + C when output is focused to copy
         if ((e.ctrlKey || e.metaKey) && e.key === 'c' && document.activeElement === elements.output) {
             if (elements.output.value) copyToClipboard();
+        }
+    }
+
+    function initializeTheme() {
+        // Check for saved theme preference or default to system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let currentTheme;
+        if (savedTheme) {
+            currentTheme = savedTheme;
+        } else {
+            currentTheme = systemPrefersDark ? 'dark' : 'light';
+        }
+        
+        setTheme(currentTheme);
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
+
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (elements.themeIcon) {
+            elements.themeIcon.textContent = themes[theme].icon;
+        }
+        if (elements.themeToggle) {
+            elements.themeToggle.setAttribute('aria-label', themes[theme].label);
         }
     }
 });
