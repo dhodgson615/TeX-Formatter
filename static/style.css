@@ -175,7 +175,7 @@ textarea {
 }
     white-space: pre-wrap;
     overflow-x: auto;
-}
+} /* IDE complains about this */
 
 textarea:focus {
     outline: none;
