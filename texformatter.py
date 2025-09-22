@@ -165,8 +165,8 @@ def pass5(lines: list[str]) -> list[str]:
     new_lines = []
 
     for line in lines:
-        stripped: str = line.strip()
-        current_indent: int = len(line) - len(line.lstrip(" "))
+        stripped = line.strip()
+        current_indent = len(line) - len(line.lstrip(" "))
 
         if stripped.startswith("\\subsubsection"):
             new_indent: int = current_indent
