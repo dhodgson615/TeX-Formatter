@@ -38,6 +38,9 @@ def pass1(lines: list[str]) -> list[str]:
 
 
 def pass2(lines: list[str]) -> list[str]:
+    """Second Pass: Chapter Indentation. Adjusts indentation for
+    \\chapter commands and their content. Lines within a chapter are
+    indented until a new chapter, section, or end of document.
     """
     Second Pass: Chapter Indentation. Adjusts indentation for \\chapter
     commands and their content. Lines within a chapter are indented
