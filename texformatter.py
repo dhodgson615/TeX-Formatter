@@ -165,9 +165,8 @@ def pass5(lines: list[str]) -> list[str]:
 
         elif in_subsubsection:
             if (
-                any(
-                    stripped.startswith(cmd)
-                    for cmd in (
+                stripped.startswith(
+                    (
                         "\\chapter",
                         "\\section",
                         "\\subsection",
