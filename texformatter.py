@@ -215,8 +215,10 @@ if __name__ == "__main__":
 
     parser.add_argument("file", help="LaTeX file to format")
     parser.add_argument(
-        "-i", "--in-place", action="store_true",
-        help="Edit the file in place (default: print to stdout)"
+        "-i",
+        "--in-place",
+        action="store_true",
+        help="Edit the file in place (default: print to stdout)",
     )
     
     args = parser.parse_args()
