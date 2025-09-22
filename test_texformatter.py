@@ -228,8 +228,6 @@ class TestMainFunction(unittest.TestCase):
 
     def test_backup_creation(self) -> None:
         """Test that backup files are created when requested."""
-        import sys
-        from unittest.mock import patch
 
         # Mock command line arguments
         test_args = [
