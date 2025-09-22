@@ -91,10 +91,7 @@ def pass3(lines: list[str]) -> list[str]:
 
         elif in_section:
             if (
-                any(
-                    stripped.startswith(cmd)
-                    for cmd in ("\\chapter", "\\section")
-                )
+                stripped.startswith(("\\chapter", "\\section"))
                 or stripped == "\\end{document}"
             ):
                 new_indent = current_indent
