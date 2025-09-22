@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
         output: document.getElementById('latex-output'),
         formatBtn: document.getElementById('format-btn'),
         copyBtn: document.getElementById('copy-btn'),
-        customSpaces: document.getElementById('custom-spaces'),
-        customRadio: document.querySelector('input[name="indent"][value="custom"]'),
+        indentNumber: document.getElementById('indent-number'),
+        indentType: document.getElementById('indent-type'),
         formatterSection: document.querySelector('.formatter-section'),
         controls: document.querySelector('.controls'),
         inputSection: document.querySelector('.input-section'),
@@ -29,11 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.input.addEventListener('input', updateButtonStates);
     elements.themeToggle.addEventListener('click', toggleTheme);
 
-    // Custom spaces input handling
-    ['focus', 'input'].forEach(event => {
-        elements.customSpaces.addEventListener(event, () => elements.customRadio.checked = true);
-    });
-
     // Initialize UI state
     updateButtonStates();
 
@@ -55,17 +50,15 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Get selected indent option
-        const selectedIndent = document.querySelector('input[name="indent"]:checked').value;
+        // Get selected indent option from dropdowns
+        const indentNumber = parseInt(elements.indentNumber.value);
+        const indentType = elements.indentType.value;
+        
         let indentStr;
-
-        if (selectedIndent === '\\t') {
+        if (indentType === 'tabs') {
             indentStr = '\t';
-        } else if (selectedIndent === 'custom') {
-            const customSpaces = parseInt(elements.customSpaces.value) || 3;
-            indentStr = ' '.repeat(Math.max(1, Math.min(20, customSpaces)));
         } else {
-            indentStr = selectedIndent;
+            indentStr = ' '.repeat(indentNumber);
         }
 
         setLoadingState(true);
