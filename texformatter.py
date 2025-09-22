@@ -9,8 +9,7 @@ import re
 
 
 def pass1(lines: list[str]) -> list[str]:
-    """
-    First Pass: Environment Indentation. This function indents LaTeX
+    """First Pass: Environment Indentation. This function indents LaTeX
     environments defined by \\begin{...} and \\end{...}. Indentation
     increases for \\begin and decreases for \\end.
     """
