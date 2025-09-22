@@ -239,7 +239,7 @@ class TestMainFunction(unittest.TestCase):
             "--backup",
         ]
 
-        with patch.object(sys, "argv", test_args):
+        with unittest.mock.patch.object(sys, "argv", test_args):
             texformatter.main()
 
         # Check that backup file was created
