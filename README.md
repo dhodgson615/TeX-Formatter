@@ -135,13 +135,13 @@ The web interface is built using:
 
 File Structure:
 ```
-├── app.py              # Flask application
+├── app.py           # Flask application
 ├── templates/
-│   └── index.html      # Main page template
+│   └── index.html   # Main page template
 ├── static/
-│   ├── style.css       # Stylesheet
-│   └── script.js       # JavaScript functionality
-└── texformatter.py    # Core formatting logic
+│   ├── style.css    # Stylesheet
+│   └── script.js    # JavaScript functionality
+└── texformatter.py  # Core formatting logic
 ```
 
 You can customize the web interface by:
