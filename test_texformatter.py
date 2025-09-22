@@ -202,6 +202,7 @@ class TestTexFormatter(unittest.TestCase):
             "Content",
             "\\end{document}",
         ]
+
         input_code = "\n".join(input_lines)
 
         result = texformatter.indent_latex(input_code, "  ")
