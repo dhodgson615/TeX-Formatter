@@ -30,6 +30,28 @@ The script performs the indentation in five distinct passes:
     `\subsubsection` commands, stopping when a chapter, section, subsection,
     subsubsection, or the end of the document is reached.
 
+## Installation
+
+### Command Line Interface
+
+The command line interface requires only Python 3.7+ and uses only standard library modules. No additional installation is needed:
+
+```bash
+python3 texformatter.py file.tex
+```
+
+### Web Interface
+
+For the web interface, you need to install Flask and its dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+This installs:
+- Flask 3.1.2
+- Required dependencies (Werkzeug, Jinja2, etc.)
+
 ## Usage
 
 ### Command Line Interface
@@ -51,26 +73,19 @@ python3 texformatter.py --in-place file.tex
 
 ### Web Interface
 
-TeX-Formatter now includes a modern web interface for easy online formatting:
+TeX-Formatter includes a modern web interface for easy online formatting.
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. Start the web server:
-   ```bash
-   python3 app.py
-   ```
-
+**Quick Start:**
+1. Install dependencies: `pip install -r requirements.txt`
+2. Start the server: `python3 app.py`
 3. Open your browser to `http://localhost:8080`
 
-The web interface features:
+**Features:**
 - Clean, minimalistic design with a warm coffee shop theme
 - Two large text areas for easy paste-and-format workflow
 - Multiple indentation options (4 spaces, 2 spaces, or tabs)
 - Copy to clipboard functionality
 - Responsive design for desktop and mobile
-- Comprehensive technical documentation
+- Keyboard shortcuts for efficient workflow
 
-See `WEB_README.md` for detailed web interface documentation.
+For detailed web interface documentation, installation troubleshooting, API usage, and customization options, see [`WEB_README.md`](WEB_README.md).
