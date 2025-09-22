@@ -201,8 +201,7 @@ def pass5(lines: list[str]) -> list[str]:
 
 
 def indent_latex(code: str) -> str:
-    """
-    Main Function: Indent LaTeX Code. Applies all five indentation
+    """Main Function: Indent LaTeX Code. Applies all five indentation
     passes sequentially to the input LaTeX code string. Returns the
     fully formatted LaTeX code.
     """
