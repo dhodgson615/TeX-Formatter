@@ -38,3 +38,11 @@ format as an argument:
 ```bash
 python3 texformatter.py file.tex
 ```
+
+By default, the script prints the formatted output to stdout. To modify the file
+in place, use the `-i` or `--in-place` flag:
+
+```bash
+python3 texformatter.py -i file.tex
+python3 texformatter.py --in-place file.tex
+```
