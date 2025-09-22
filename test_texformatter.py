@@ -151,7 +151,7 @@ Section content
 \\end{itemize}
 \\subsection{Subsection}
 Subsection content
-\\end{document}"""
+\\end{document}"""  # TODO: make this not use triple quotes
 
         expected_lines = [
             "\\documentclass{article}",
@@ -178,7 +178,7 @@ Subsection content
         input_code = """\\begin{document}
 \\section{Section}
 Content
-\\end{document}"""
+\\end{document}""" # TODO: make this not use triple quotes
 
         result = texformatter.indent_latex(input_code, "\t")
         lines = result.split("\n")
@@ -192,7 +192,7 @@ Content
         input_code = """\\begin{document}
 \\section{Section}
 Content
-\\end{document}"""
+\\end{document}""" # TODO: make this not use triple quotes
 
         result = texformatter.indent_latex(input_code, "  ")
         lines = result.split("\n")
