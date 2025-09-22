@@ -99,6 +99,8 @@ textarea {
     line-height: 1.4;
     resize: vertical;
     transition: border-color 0.3s ease;
+    white-space: nowrap;
+    overflow-x: auto;
 }
 
 textarea:focus {
