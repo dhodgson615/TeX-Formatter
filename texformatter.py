@@ -161,8 +161,8 @@ def pass5(lines: list[str]) -> list[str]:
     subsubsection are indented until a new chapter, section, subsection,
     subsubsection or end of document.
     """
-    in_subsubsection: bool = False
-    new_lines: list[str] = []
+    in_subsubsection = False
+    new_lines = []
 
     for line in lines:
         stripped: str = line.strip()
