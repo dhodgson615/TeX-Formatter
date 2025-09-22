@@ -31,7 +31,7 @@ def pass1(lines: list[str]) -> list[str]:
             env_match = re.match(r"\\begin\{([^}]+)\}", stripped)
 
             if env_match:
-                env_name: str = env_match.group(1)
+                env_name = env_match.group(1)
                 env_stack.append(env_name)
 
     return new_lines
