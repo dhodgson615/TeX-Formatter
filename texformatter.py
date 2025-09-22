@@ -220,7 +220,7 @@ if __name__ == "__main__":
         action="store_true",
         help="Edit the file in place (default: print to stdout)",
     )
-    
+
     args = parser.parse_args()
     
     with open(args.file, "r", encoding="utf-8") as f:
