@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeX-Formatter - LaTeX Code Formatter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TeX-Formatter</h1>
+            <p class="subtitle">Professional LaTeX Code Formatting</p>
+        </header>
+
+        <main>
+            <div class="formatter-section">
+                <div class="text-area-container">
+                    <div class="input-section">
+                        <h2>Paste Text Here</h2>
+                        <textarea id="latex-input" placeholder="Paste your LaTeX code here..."></textarea>
+                    </div>
+                    
+                    <div class="controls">
+                        <button id="format-btn" class="format-button">Format LaTeX</button>
+                        <div class="indent-options">
+                            <label>
+                                <input type="radio" name="indent" value="    " checked>
+                                4 Spaces
+                            </label>
+                            <label>
+                                <input type="radio" name="indent" value="  ">
+                                2 Spaces
+                            </label>
+                            <label>
+                                <input type="radio" name="indent" value="\t">
+                                Tabs
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="output-section">
+                        <h2>Output</h2>
+                        <textarea id="latex-output" readonly placeholder="Formatted LaTeX code will appear here..."></textarea>
+                        <button id="copy-btn" class="copy-button" disabled>Copy to Clipboard</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="technical-details">
+            <h2>How It Works</h2>
+            <div class="details-content">
+                <div class="overview">
+                    <h3>Overview</h3>
+                    <p>TeX-Formatter is a Python script that automatically formats LaTeX files using a sophisticated multi-pass indentation system. It transforms unstructured LaTeX source code into beautifully organized, hierarchically indented documents that are easier to read, edit, and maintain.</p>
+                </div>
+
+                <div class="formatting-steps">
+                    <h3>Formatting Process</h3>
+                    <p>The formatter applies indentation through five distinct passes, each handling specific LaTeX constructs:</p>
+                    
+                    <ol>
+                        <li><strong>Environment Indentation:</strong> Handles LaTeX environments defined by <code>\begin{...}</code> and <code>\end{...}</code>. Content within environments is automatically indented to show the hierarchical structure.</li>
+                        
+                        <li><strong>Chapter Indentation:</strong> Indents content within <code>\chapter</code> commands. The indentation continues until another chapter, section, or document end is encountered.</li>
+                        
+                        <li><strong>Section Indentation:</strong> Similarly handles <code>\section</code> commands, creating visual hierarchy that makes document structure immediately apparent.</li>
+                        
+                        <li><strong>Subsection Indentation:</strong> Processes <code>\subsection</code> commands, maintaining consistent nesting levels throughout the document.</li>
+                        
+                        <li><strong>Subsubsection Indentation:</strong> Handles the finest level of sectioning with <code>\subsubsection</code> commands, ensuring even deeply nested content remains properly organized.</li>
+                    </ol>
+                </div>
+
+                <div class="technical-implementation">
+                    <h3>Technical Implementation</h3>
+                    <p>The formatter uses a state-machine approach with environment stacks and section tracking. Each pass analyzes the document structure and applies appropriate indentation based on the current nesting level. The algorithm preserves the original content while enhancing readability through consistent spacing and hierarchy visualization.</p>
+                    
+                    <p>Key features include:</p>
+                    <ul>
+                        <li>Configurable indentation (spaces or tabs)</li>
+                        <li>Preservation of original LaTeX syntax</li>
+                        <li>Intelligent handling of nested structures</li>
+                        <li>Support for all standard LaTeX document classes</li>
+                        <li>Safe processing that maintains document integrity</li>
+                    </ul>
+                </div>
+
+                <div class="benefits">
+                    <h3>Benefits</h3>
+                    <p>Properly formatted LaTeX code offers numerous advantages:</p>
+                    <ul>
+                        <li><strong>Enhanced Readability:</strong> Clear visual hierarchy makes document structure obvious at a glance</li>
+                        <li><strong>Easier Debugging:</strong> Mismatched environments and structural issues become immediately apparent</li>
+                        <li><strong>Better Collaboration:</strong> Consistent formatting reduces confusion when multiple authors work on the same document</li>
+                        <li><strong>Improved Maintenance:</strong> Well-organized code is easier to modify and extend over time</li>
+                        <li><strong>Professional Standards:</strong> Follows best practices for LaTeX code organization</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
