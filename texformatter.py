@@ -128,10 +128,7 @@ def pass4(lines: list[str]) -> list[str]:
 
         elif in_subsection:
             if (
-                any(
-                    stripped.startswith(cmd)
-                    for cmd in ("\\chapter", "\\section", "\\subsection")
-                )
+                stripped.startswith(("\\chapter", "\\section", "\\subsection"))
                 or stripped == "\\end{document}"
             ):
                 new_indent = current_indent
