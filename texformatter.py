@@ -8,76 +8,35 @@ import argparse
 import re
 
 
-def pass1(lines: list[str]) -> list[str]:
-    """First Pass: Environment Indentation. This function indents LaTeX
-    environments defined by \\begin{...} and \\end{...}. Indentation
-    increases for \\begin and decreases for \\end.
+def indent_environments(lines: list[str]) -> list[str]:  # TODO: unit tests
+    """Indents LaTeX environments defined by \\begin{...} and
+    \\end{...}
     """
     env_stack: list[str] = []
-    new_lines: list[str] = []
+    new_lines = []
 
     for line in lines:
         stripped = line.strip()
 
-        if stripped.startswith("\\end{"):
-            if env_stack:  # Only pop if the stack is not empty.
-                env_stack.pop()
+        if stripped.startswith("\\end{") and env_stack:
+            env_stack.pop()
 
-        current_indent = len(env_stack)
-        indented_line = "    " * current_indent + stripped
+        indented_line = "    " * len(env_stack) + stripped
         new_lines.append(indented_line)
 
         if stripped.startswith("\\begin{"):
             env_match = re.match(r"\\begin\{([^}]+)}", stripped)
 
             if env_match:
-                env_name = env_match.group(1)
-                env_stack.append(env_name)
+                env_stack.append(env_match.group(1))
 
     return new_lines
 
 
-def pass2(lines: list[str]) -> list[str]:
-    """Second Pass: Chapter Indentation. Adjusts indentation for
-    \\chapter commands and their content. Lines within a chapter are
-    indented until a new chapter, section, or end of document.
-    """
-    in_chapter = False
-    new_lines = []
-
-    for line in lines:
-        stripped = line.strip()
-        current_indent = len(line) - len(line.lstrip(" "))
-
-        if stripped.startswith("\\chapter"):
-            new_indent = current_indent
-            in_chapter = True
-
-        elif in_chapter:
-            if (
-                stripped.startswith(("\\chapter", "\\section"))
-                or stripped == "\\end{document}"
-            ):
-                new_indent = current_indent
-                in_chapter = False
-
-            else:
-                new_indent = current_indent + 4
-
-        else:
-            new_indent = current_indent
-
-        new_line = " " * new_indent + stripped
-        new_lines.append(new_line)
-
-    return new_lines
-
-
-def pass3(lines: list[str]) -> list[str]:
-    """Third Pass: Section Indentation. Adjusts indentation for
-    \\section commands and their content. Lines within a section are
-    indented until a new chapter/section or end of document.
-    """
+def indent_section_level(
+    lines: list[str], command: str, exit_commands: list[str]
+) -> list[str]:  # TODO: unit tests
+    """Generic indentation function for sections, subsections, etc."""
     in_section = False
     new_lines = []
 
@@ -85,13 +44,13 @@ def pass3(lines: list[str]) -> list[str]:
         stripped = line.strip()
         current_indent = len(line) - len(line.lstrip(" "))
 
-        if stripped.startswith("\\section"):
+        if stripped.startswith(command):
             new_indent = current_indent
             in_section = True
 
         elif in_section:
             if (
-                stripped.startswith(("\\chapter", "\\section"))
+                any(stripped.startswith(cmd) for cmd in exit_commands)
                 or stripped == "\\end{document}"
             ):
                 new_indent = current_indent
@@ -103,101 +62,37 @@ def pass3(lines: list[str]) -> list[str]:
         else:
             new_indent = current_indent
 
-        new_line = " " * new_indent + stripped
-        new_lines.append(new_line)
+        new_lines.append(" " * new_indent + stripped)
 
     return new_lines
 
 
-def pass4(lines: list[str]) -> list[str]:
-    """Fourth Pass: Subsection Indentation. Adjusts indentation for
-    \\subsection commands and their content. Lines within a subsection
-    are indented until a new chapter/section/subsection or end of the
-    document.
-    """
-    in_subsection = False
-    new_lines = []
+def indent_latex(code: str) -> str:  # TODO: unit tests
+    """Main Function: Indent LaTeX Code"""
+    lines = code.split("\n")
 
-    for line in lines:
-        stripped = line.strip()
-        current_indent = len(line) - len(line.lstrip(" "))
+    # First pass: environment indentation
+    lines = indent_environments(lines)
 
-        if stripped.startswith("\\subsection"):
-            new_indent = current_indent
-            in_subsection = True
+    # Define section levels and their exit conditions
+    section_levels = [
+        ("\\chapter", ["\\chapter", "\\section"]),
+        ("\\section", ["\\chapter", "\\section"]),
+        ("\\subsection", ["\\chapter", "\\section", "\\subsection"]),
+        (
+            "\\subsubsection",
+            ["\\chapter", "\\section", "\\subsection", "\\subsubsection"],
+        ),
+    ]
 
-        elif in_subsection:
-            if (
-                stripped.startswith(("\\chapter", "\\section", "\\subsection"))
-                or stripped == "\\end{document}"
-            ):
-                new_indent = current_indent
-                in_subsection = False
+    # Apply each section level indentation in sequence
+    for command, exit_commands in section_levels:
+        lines = indent_section_level(lines, command, exit_commands)
 
-            else:
-                new_indent = current_indent + 4
-
-        else:
-            new_indent = current_indent
-
-        new_line = " " * new_indent + stripped
-        new_lines.append(new_line)
-
-    return new_lines
+    return "\n".join(lines)
 
 
-def pass5(lines: list[str]) -> list[str]:
-    """Fifth Pass: Subsubsection Indentation. Adjusts indentation for
-    \\subsubsection commands and their content. Lines within a
-    subsubsection are indented until a new chapter, section, subsection,
-    subsubsection or end of document.
-    """
-    in_subsubsection = False
-    new_lines = []
-
-    for line in lines:
-        stripped = line.strip()
-        current_indent = len(line) - len(line.lstrip(" "))
-
-        if stripped.startswith("\\subsubsection"):
-            new_indent = current_indent
-            in_subsubsection = True
-
-        elif in_subsubsection:
-            if (
-                stripped.startswith(
-                    (
-                        "\\chapter",
-                        "\\section",
-                        "\\subsection",
-                        "\\subsubsection",
-                    )
-                )
-                or stripped == "\\end{document}"
-            ):
-                new_indent = current_indent
-                in_subsubsection = False
-
-            else:
-                new_indent = current_indent + 4
-
-        else:
-            new_indent = current_indent
-
-        new_line = " " * new_indent + stripped
-        new_lines.append(new_line)
-
-    return new_lines
-
-
-def indent_latex(code: str) -> str:
-    """Main Function: Indent LaTeX Code. Applies all five indentation
-    passes sequentially to the input LaTeX code string. Returns the
-    fully formatted LaTeX code.
-    """
-    return "\n".join(pass5(pass4(pass3(pass2(pass1(code.split("\n")))))))
-
-
+# TODO: make actual main() function
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Format LaTeX source code with proper indentation."
@@ -225,3 +120,9 @@ if __name__ == "__main__":
 
     else:
         print("\n\n" + formatted_code + "\n\n")
+
+# TODO: add command line option to back up original file
+# TODO: add command line option to specify number of spaces per indent level
+# TODO: add command line option to specify tab character instead of spaces
+# TODO: add realistic dummy LaTeX files for testing
+# TODO: add unit tests for all functions
