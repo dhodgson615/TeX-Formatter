@@ -212,6 +212,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Format LaTeX source code with proper indentation."
     )
+
     parser.add_argument("file", help="LaTeX file to format")
     parser.add_argument(
         "-i", "--in-place", action="store_true",
