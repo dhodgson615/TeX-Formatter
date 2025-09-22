@@ -154,6 +154,7 @@ class TestTexFormatter(unittest.TestCase):
             "Subsection content",
             "\\end{document}",
         ]
+
         input_code = "\n".join(input_lines)
 
         expected_lines = [
