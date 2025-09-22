@@ -227,7 +227,7 @@ if __name__ == "__main__":
         latex_code = f.read()
 
     formatted_code = indent_latex(latex_code)
-    
+
     if args.in_place:
         with open(args.file, "w", encoding="utf-8") as f:
             f.write(formatted_code)
