@@ -81,12 +81,8 @@ def pass3(lines: list[str]) -> list[str]:
     \\section commands and their content. Lines within a section are
     indented until a new chapter/section or end of document.
     """
-    Third Pass: Section Indentation. Adjusts indentation for \\section
-    commands and their content. Lines within a section are indented
-    until a new chapter/section or end of document.
-    """
-    in_section: bool = False
-    new_lines: list[str] = []
+    in_section = False
+    new_lines = []
 
     for line in lines:
         stripped: str = line.strip()
