@@ -1,5 +1,3 @@
-// TeX-Formatter Web Interface JavaScript
-
 document.addEventListener('DOMContentLoaded', function() {
     const inputTextarea = document.getElementById('latex-input');
     const outputTextarea = document.getElementById('latex-output');
