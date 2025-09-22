@@ -231,5 +231,6 @@ if __name__ == "__main__":
     if args.in_place:
         with open(args.file, "w", encoding="utf-8") as f:
             f.write(formatted_code)
+
     else:
         print("\n\n" + formatted_code + "\n\n")
