@@ -116,8 +116,7 @@ def pass3(lines: list[str]) -> list[str]:
 
 
 def pass4(lines: list[str]) -> list[str]:
-    """
-    Fourth Pass: Subsection Indentation. Adjusts indentation for
+    """Fourth Pass: Subsection Indentation. Adjusts indentation for
     \\subsection commands and their content. Lines within a subsection
     are indented until a new chapter/section/subsection or end of the
     document.
