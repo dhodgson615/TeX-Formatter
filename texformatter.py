@@ -28,9 +28,8 @@ def pass1(lines: list[str]) -> list[str]:
         new_lines.append(indented_line)
 
         if stripped.startswith("\\begin{"):
-            env_match: Match[str] | None = re.match(
-                r"\\begin\{([^}]+)\}", stripped
-            )
+            env_match = re.match(r"\\begin\{([^}]+)\}", stripped)
+
             if env_match:
                 env_name: str = env_match.group(1)
                 env_stack.append(env_name)
