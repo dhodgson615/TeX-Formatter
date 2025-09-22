@@ -1,6 +1,7 @@
 """Unit tests for texformatter.py functions."""
 
 import os
+import sys
 import tempfile
 import unittest
 
