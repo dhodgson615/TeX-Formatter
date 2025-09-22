@@ -1,0 +1,337 @@
+/* TeX-Formatter Web Interface Styles */
+/* Coffee shop / taupe theme with minimalistic design */
+
+:root {
+    --primary-bg: #f5f2ed;        /* warm cream background */
+    --secondary-bg: #ede7d9;      /* slightly darker cream */
+    --accent-bg: #d7c7a8;         /* light taupe */
+    --dark-taupe: #9d8e73;        /* medium taupe */
+    --text-primary: #3d3527;      /* dark brown */
+    --text-secondary: #5a5043;    /* medium brown */
+    --border-color: #c4b59a;      /* light taupe border */
+    --hover-color: #b8a382;       /* darker taupe for hover */
+    --shadow: rgba(61, 53, 39, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    font-weight: 300;
+}
+
+.formatter-section {
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 4px 20px var(--shadow);
+}
+
+.text-area-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 2rem;
+    align-items: start;
+}
+
+.input-section,
+.output-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-section h2,
+.output-section h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+textarea {
+    width: 100%;
+    height: 400px;
+    padding: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--dark-taupe);
+    box-shadow: 0 0 0 3px rgba(157, 142, 115, 0.2);
+}
+
+textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 0;
+}
+
+.format-button {
+    background: var(--dark-taupe);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(157, 142, 115, 0.3);
+}
+
+.format-button:hover {
+    background: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(157, 142, 115, 0.4);
+}
+
+.format-button:active {
+    transform: translateY(0);
+}
+
+.format-button:disabled {
+    background: var(--border-color);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.indent-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background: var(--primary-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.indent-options label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.indent-options label:hover {
+    color: var(--text-primary);
+}
+
+.indent-options input[type="radio"] {
+    accent-color: var(--dark-taupe);
+}
+
+.copy-button {
+    background: var(--accent-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.2s ease;
+    align-self: flex-end;
+}
+
+.copy-button:hover:not(:disabled) {
+    background: var(--dark-taupe);
+    color: white;
+}
+
+.copy-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.technical-details {
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px var(--shadow);
+}
+
+.technical-details h2 {
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.details-content {
+    display: grid;
+    gap: 2rem;
+}
+
+.details-content > div {
+    background: var(--primary-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--dark-taupe);
+}
+
+.details-content h3 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.details-content p {
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.details-content ol,
+.details-content ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.details-content li {
+    margin-bottom: 0.5rem;
+}
+
+.details-content code {
+    background: var(--accent-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 0.9em;
+    color: var(--text-primary);
+}
+
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    border: 1px solid #f5c6cb;
+    display: none;
+}
+
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .text-area-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    
+    .controls {
+        order: 2;
+        padding: 1.5rem 0;
+    }
+    
+    .output-section {
+        order: 3;
+    }
+    
+    textarea {
+        height: 300px;
+    }
+    
+    .formatter-section {
+        padding: 1.5rem;
+    }
+    
+    .technical-details {
+        padding: 1.5rem;
+    }
+    
+    .details-content > div {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    textarea {
+        height: 250px;
+        font-size: 13px;
+        padding: 1rem;
+    }
+    
+    .format-button {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+}

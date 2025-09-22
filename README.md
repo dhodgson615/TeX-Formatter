@@ -32,6 +32,8 @@ The script performs the indentation in five distinct passes:
 
 ## Usage
 
+### Command Line Interface
+
 To use the script, run it from the command line with the LaTeX file you want to
 format as an argument:
 
@@ -46,3 +48,29 @@ in place, use the `-i` or `--in-place` flag:
 python3 texformatter.py -i file.tex
 python3 texformatter.py --in-place file.tex
 ```
+
+### Web Interface
+
+TeX-Formatter now includes a modern web interface for easy online formatting:
+
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Start the web server:
+   ```bash
+   python3 app.py
+   ```
+
+3. Open your browser to `http://localhost:8080`
+
+The web interface features:
+- Clean, minimalistic design with a warm coffee shop theme
+- Two large text areas for easy paste-and-format workflow
+- Multiple indentation options (4 spaces, 2 spaces, or tabs)
+- Copy to clipboard functionality
+- Responsive design for desktop and mobile
+- Comprehensive technical documentation
+
+See `WEB_README.md` for detailed web interface documentation.
