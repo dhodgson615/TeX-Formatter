@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """This script formats LaTeX source code using a series of indentation
 passes. It handles environments, chapters, sections, subsections, and
 subsubsections. Usage: python3 texformatter.py input.tex [-i]"""
