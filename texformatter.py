@@ -89,7 +89,7 @@ def pass3(lines: list[str]) -> list[str]:
         current_indent = len(line) - len(line.lstrip(" "))
 
         if stripped.startswith("\\section"):
-            new_indent: int = current_indent
+            new_indent = current_indent
             in_section = True
 
         elif in_section:
