@@ -17,7 +17,8 @@ def pass1(lines: list[str]) -> list[str]:
     new_lines: list[str] = []
 
     for line in lines:
-        stripped: str = line.strip()
+        stripped = line.strip()
+
         if stripped.startswith("\\end{"):
             if env_stack:  # Only pop if the stack is not empty.
                 env_stack.pop()
