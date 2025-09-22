@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """This script formats LaTeX source code using a series of indentation
 passes. It handles environments, chapters, sections, subsections, and
-subsubsections. Usage: python3 indent_latex.py input.tex"""
+subsubsections. Usage: python3 texformatter.py input.tex [-i]"""
 
 
+import argparse
 import re
 import sys
 from re import Match
@@ -208,12 +209,24 @@ def indent_latex(code: str) -> str:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python indent_latex.py input.tex")
-        sys.exit(1)
-
-    file_path: str = sys.argv[1]
-    with open(file_path, "r", encoding="utf-8") as f:
+    parser = argparse.ArgumentParser(
+        description="Format LaTeX source code with proper indentation."
+    )
+    parser.add_argument("file", help="LaTeX file to format")
+    parser.add_argument(
+        "-i", "--in-place", action="store_true",
+        help="Edit the file in place (default: print to stdout)"
+    )
+    
+    args = parser.parse_args()
+    
+    with open(args.file, "r", encoding="utf-8") as f:
         latex_code: str = f.read()
-
-    print("\n\n" + indent_latex(latex_code) + "\n\n")
+    
+    formatted_code = indent_latex(latex_code)
+    
+    if args.in_place:
+        with open(args.file, "w", encoding="utf-8") as f:
+            f.write(formatted_code)
+    else:
+        print("\n\n" + formatted_code + "\n\n")
