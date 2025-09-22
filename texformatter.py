@@ -129,7 +129,7 @@ def pass4(lines: list[str]) -> list[str]:
         current_indent = len(line) - len(line.lstrip(" "))
 
         if stripped.startswith("\\subsection"):
-            new_indent: int = current_indent
+            new_indent = current_indent
             in_subsection = True
         elif in_subsection:
             if (
