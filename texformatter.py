@@ -23,9 +23,8 @@ def pass1(lines: list[str]) -> list[str]:
             if env_stack:  # Only pop if the stack is not empty.
                 env_stack.pop()
 
-        current_indent: int = len(env_stack)
-
-        indented_line: str = "    " * current_indent + stripped
+        current_indent = len(env_stack)
+        indented_line = "    " * current_indent + stripped
         new_lines.append(indented_line)
         if stripped.startswith("\\begin{"):
             env_match: Match[str] | None = re.match(
