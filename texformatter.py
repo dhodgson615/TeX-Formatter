@@ -6,8 +6,6 @@ from __future__ import annotations
 
 import argparse
 import re
-import sys
-from re import Match
 
 
 def pass1(lines: list[str]) -> list[str]:
