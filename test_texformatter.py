@@ -139,19 +139,22 @@ class TestTexFormatter(unittest.TestCase):
 
     def test_indent_latex_complete(self) -> None:
         """Test complete LaTeX indentation."""
-        input_code = """\\documentclass{article}
-\\begin{document}
-\\chapter{Chapter}
-Chapter content
-\\section{Section}
-Section content
-\\begin{itemize}
-\\item Item 1
-\\item Item 2
-\\end{itemize}
-\\subsection{Subsection}
-Subsection content
-\\end{document}"""  # TODO: make this not use triple quotes
+        input_lines = [
+            "\\documentclass{article}",
+            "\\begin{document}",
+            "\\chapter{Chapter}",
+            "Chapter content",
+            "\\section{Section}",
+            "Section content",
+            "\\begin{itemize}",
+            "\\item Item 1",
+            "\\item Item 2",
+            "\\end{itemize}",
+            "\\subsection{Subsection}",
+            "Subsection content",
+            "\\end{document}",
+        ]
+        input_code = "\n".join(input_lines)
 
         expected_lines = [
             "\\documentclass{article}",
@@ -175,10 +178,13 @@ Subsection content
 
     def test_indent_latex_with_tabs(self) -> None:
         """Test complete LaTeX indentation with tabs."""
-        input_code = """\\begin{document}
-\\section{Section}
-Content
-\\end{document}""" # TODO: make this not use triple quotes
+        input_lines = [
+            "\\begin{document}",
+            "\\section{Section}",
+            "Content",
+            "\\end{document}",
+        ]
+        input_code = "\n".join(input_lines)
 
         result = texformatter.indent_latex(input_code, "\t")
         lines = result.split("\n")
@@ -189,10 +195,13 @@ Content
 
     def test_indent_latex_with_custom_spaces(self) -> None:
         """Test complete LaTeX indentation with custom space count."""
-        input_code = """\\begin{document}
-\\section{Section}
-Content
-\\end{document}""" # TODO: make this not use triple quotes
+        input_lines = [
+            "\\begin{document}",
+            "\\section{Section}",
+            "Content",
+            "\\end{document}",
+        ]
+        input_code = "\n".join(input_lines)
 
         result = texformatter.indent_latex(input_code, "  ")
         lines = result.split("\n")
