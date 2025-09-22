@@ -16,6 +16,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Input change handler to enable/disable buttons
     inputTextarea.addEventListener('input', updateButtonStates);
     
+    // Custom spaces input handling
+    const customSpacesInput = document.getElementById('custom-spaces');
+    const customRadio = document.querySelector('input[name="indent"][value="custom"]');
+    
+    // Auto-select custom radio when number input is focused or changed
+    customSpacesInput.addEventListener('focus', () => {
+        customRadio.checked = true;
+    });
+    
+    customSpacesInput.addEventListener('input', () => {
+        customRadio.checked = true;
+    });
+    
     // Initial button state
     updateButtonStates();
     
@@ -29,7 +42,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Get selected indent option
         const selectedIndent = document.querySelector('input[name="indent"]:checked').value;
-        const indentStr = selectedIndent === '\\t' ? '\t' : selectedIndent;
+        let indentStr;
+        
+        if (selectedIndent === '\\t') {
+            indentStr = '\t';
+        } else if (selectedIndent === 'custom') {
+            const customSpaces = parseInt(document.getElementById('custom-spaces').value) || 3;
+            indentStr = ' '.repeat(Math.max(1, Math.min(20, customSpaces))); // Clamp between 1 and 20
+        } else {
+            indentStr = selectedIndent;
+        }
         
         // Show loading state
         setLoadingState(true);
