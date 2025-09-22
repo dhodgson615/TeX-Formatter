@@ -26,6 +26,7 @@ def pass1(lines: list[str]) -> list[str]:
         current_indent = len(env_stack)
         indented_line = "    " * current_indent + stripped
         new_lines.append(indented_line)
+
         if stripped.startswith("\\begin{"):
             env_match: Match[str] | None = re.match(
                 r"\\begin\{([^}]+)\}", stripped
