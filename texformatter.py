@@ -102,6 +102,7 @@ def pass3(lines: list[str]) -> list[str]:
             ):
                 new_indent = current_indent
                 in_section = False
+
             else:
                 new_indent = current_indent + 4
 
