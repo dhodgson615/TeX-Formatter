@@ -109,7 +109,7 @@ def pass3(lines: list[str]) -> list[str]:
         else:
             new_indent = current_indent
 
-        new_line: str = " " * new_indent + stripped
+        new_line = " " * new_indent + stripped
         new_lines.append(new_line)
 
     return new_lines
