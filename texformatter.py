@@ -204,6 +204,7 @@ if __name__ == "__main__":
     )
 
     parser.add_argument("file", help="LaTeX file to format")
+
     parser.add_argument(
         "-i",
         "--in-place",
