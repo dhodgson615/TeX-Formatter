@@ -63,6 +63,7 @@ def pass2(lines: list[str]) -> list[str]:
             ):
                 new_indent = current_indent
                 in_chapter = False
+
             else:
                 new_indent = current_indent + 4
 
