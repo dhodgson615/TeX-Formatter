@@ -86,6 +86,68 @@ TeX-Formatter includes a modern web interface for easy online formatting.
 - Multiple indentation options (4 spaces, 2 spaces, or tabs)
 - Copy to clipboard functionality
 - Responsive design for desktop and mobile
-- Keyboard shortcuts for efficient workflow
+- Keyboard shortcuts:
+  - Ctrl+Enter (Cmd+Enter on Mac): Format the code
+  - Ctrl+Shift+C (Cmd+Shift+C on Mac): Copy formatted code
 
-For detailed web interface documentation, installation troubleshooting, API usage, and customization options, see [`WEB_README.md`](WEB_README.md).
+**API Endpoint:**
+
+The web interface exposes a REST API endpoint:
+
+**POST /format**
+- Content-Type: application/json
+- Body: `{"latex_code": "your code here", "indent_str": "    "}`
+- Response: `{"formatted_code": "formatted result"}` or `{"error": "error message"}`
+
+Example using curl:
+```bash
+curl -X POST http://localhost:8080/format \
+  -H "Content-Type: application/json" \
+  -d '{"latex_code": "\\begin{document}\nHello\n\\end{document}", "indent_str": "    "}'
+```
+
+**Technical Details:**
+
+The web interface is built using:
+- **Backend**: Flask (Python web framework)
+- **Frontend**: Vanilla HTML, CSS, and JavaScript
+- **Styling**: Custom CSS with CSS Grid and Flexbox
+- **Typography**: System fonts with monospace for code areas
+
+**Troubleshooting:**
+
+*Server won't start:*
+- Check that Python 3.7+ is installed: `python3 --version`
+- Ensure Flask is installed: `pip list | grep Flask`
+- Check if port 8080 is already in use
+
+*Formatting errors:*
+- Verify your LaTeX code syntax
+- Check browser console for JavaScript errors
+- Look at the Flask server logs for detailed error messages
+
+*Browser compatibility:*
+- Modern browsers (Chrome 60+, Firefox 55+, Safari 12+, Edge 79+)
+- JavaScript must be enabled
+- Cookies are not required
+
+**Development:**
+
+File Structure:
+```
+├── app.py              # Flask application
+├── templates/
+│   └── index.html      # Main page template
+├── static/
+│   ├── style.css       # Stylesheet
+│   └── script.js       # JavaScript functionality
+└── texformatter.py    # Core formatting logic
+```
+
+You can customize the web interface by:
+- Modifying `static/style.css` for appearance
+- Updating `static/script.js` for functionality
+- Editing `templates/index.html` for layout
+- Adjusting `app.py` for server behavior
+
+The core formatting logic is in `texformatter.py` and is shared between the CLI and web interface.
