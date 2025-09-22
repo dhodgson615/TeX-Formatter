@@ -7,10 +7,11 @@ from __future__ import annotations
 import argparse
 import re
 import shutil
-import os
 
 
-def indent_environments(lines: list[str], indent_str: str = "    ") -> list[str]:
+def indent_environments(
+    lines: list[str], indent_str: str = "    "
+) -> list[str]:
     """Indents LaTeX environments defined by \\begin{...} and
     \\end{...}
     """
@@ -36,7 +37,10 @@ def indent_environments(lines: list[str], indent_str: str = "    ") -> list[str]
 
 
 def indent_section_level(
-    lines: list[str], command: str, exit_commands: list[str], indent_str: str = "    "
+    lines: list[str],
+    command: str,
+    exit_commands: list[str],
+    indent_str: str = "    ",
 ) -> list[str]:
     """Generic indentation function for sections, subsections, etc."""
     in_section = False
@@ -47,7 +51,12 @@ def indent_section_level(
         # Count current indentation in terms of indent_str units
         current_line_lstripped = line.lstrip(" \t")
         current_indent_chars = len(line) - len(current_line_lstripped)
-        current_indent_level = current_indent_chars // len(indent_str) if len(indent_str) > 0 else 0
+
+        current_indent_level = (
+            current_indent_chars // len(indent_str)
+            if len(indent_str) > 0
+            else 0
+        )
 
         if stripped.startswith(command):
             new_indent_level = current_indent_level
@@ -97,7 +106,7 @@ def indent_latex(code: str, indent_str: str = "    ") -> str:
     return "\n".join(lines)
 
 
-def main():
+def main() -> None:
     """Main function for the LaTeX formatter."""
     parser = argparse.ArgumentParser(
         description="Format LaTeX source code with proper indentation."
@@ -139,6 +148,7 @@ def main():
     # Determine the indentation string
     if args.tabs:
         indent_str = "\t"
+
     else:
         indent_str = " " * args.spaces
 
@@ -159,7 +169,9 @@ def main():
         # Write formatted code back to the file
         with open(args.file, "w", encoding="utf-8") as f:
             f.write(formatted_code)
+
         print(f"File formatted in place: {args.file}")
+
     else:
         print("\n\n" + formatted_code + "\n\n")
 

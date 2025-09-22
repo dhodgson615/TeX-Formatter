@@ -1,33 +1,35 @@
-#!/usr/bin/env python3
 """Unit tests for texformatter.py functions."""
 
-import unittest
-import tempfile
 import os
-from texformatter import indent_environments, indent_section_level, indent_latex, main
+import tempfile
+import unittest
+
+import texformatter
 
 
 class TestTexFormatter(unittest.TestCase):
     """Test cases for the LaTeX formatter functions."""
 
-    def test_indent_environments_simple(self):
+    def test_indent_environments_simple(self) -> None:
         """Test basic environment indentation."""
         input_lines = [
             "\\documentclass{article}",
             "\\begin{document}",
             "Hello world",
-            "\\end{document}"
+            "\\end{document}",
         ]
+
         expected = [
             "\\documentclass{article}",
             "\\begin{document}",
             "    Hello world",
-            "\\end{document}"
+            "\\end{document}",
         ]
-        result = indent_environments(input_lines)
+
+        result = texformatter.indent_environments(input_lines)
         self.assertEqual(result, expected)
 
-    def test_indent_environments_nested(self):
+    def test_indent_environments_nested(self) -> None:
         """Test nested environment indentation."""
         input_lines = [
             "\\begin{document}",
@@ -37,8 +39,9 @@ class TestTexFormatter(unittest.TestCase):
             "\\item Nested item",
             "\\end{enumerate}",
             "\\end{itemize}",
-            "\\end{document}"
+            "\\end{document}",
         ]
+
         expected = [
             "\\begin{document}",
             "    \\begin{itemize}",
@@ -47,42 +50,27 @@ class TestTexFormatter(unittest.TestCase):
             "            \\item Nested item",
             "        \\end{enumerate}",
             "    \\end{itemize}",
-            "\\end{document}"
+            "\\end{document}",
         ]
-        result = indent_environments(input_lines)
+
+        result = texformatter.indent_environments(input_lines)
         self.assertEqual(result, expected)
 
-    def test_indent_environments_custom_indent(self):
+    def test_indent_environments_custom_indent(self) -> None:
         """Test environment indentation with custom indent string."""
-        input_lines = [
-            "\\begin{document}",
-            "Hello world",
-            "\\end{document}"
-        ]
-        expected = [
-            "\\begin{document}",
-            "  Hello world",
-            "\\end{document}"
-        ]
-        result = indent_environments(input_lines, "  ")
+        input_lines = ["\\begin{document}", "Hello world", "\\end{document}"]
+        expected = ["\\begin{document}", "  Hello world", "\\end{document}"]
+        result = texformatter.indent_environments(input_lines, "  ")
         self.assertEqual(result, expected)
 
-    def test_indent_environments_tabs(self):
+    def test_indent_environments_tabs(self) -> None:
         """Test environment indentation with tabs."""
-        input_lines = [
-            "\\begin{document}",
-            "Hello world",
-            "\\end{document}"
-        ]
-        expected = [
-            "\\begin{document}",
-            "\tHello world",
-            "\\end{document}"
-        ]
-        result = indent_environments(input_lines, "\t")
+        input_lines = ["\\begin{document}", "Hello world", "\\end{document}"]
+        expected = ["\\begin{document}", "\tHello world", "\\end{document}"]
+        result = texformatter.indent_environments(input_lines, "\t")
         self.assertEqual(result, expected)
 
-    def test_indent_section_level_chapter(self):
+    def test_indent_section_level_chapter(self) -> None:
         """Test chapter level indentation."""
         input_lines = [
             "\\documentclass{book}",
@@ -91,8 +79,9 @@ class TestTexFormatter(unittest.TestCase):
             "\\section{Section}",
             "Section content",
             "\\chapter{Second Chapter}",
-            "More content"
+            "More content",
         ]
+
         expected = [
             "\\documentclass{book}",
             "\\chapter{First Chapter}",
@@ -100,12 +89,16 @@ class TestTexFormatter(unittest.TestCase):
             "\\section{Section}",
             "Section content",
             "\\chapter{Second Chapter}",
-            "    More content"
+            "    More content",
         ]
-        result = indent_section_level(input_lines, "\\chapter", ["\\chapter", "\\section"])
+
+        result = texformatter.indent_section_level(
+            input_lines, "\\chapter", ["\\chapter", "\\section"]
+        )
+
         self.assertEqual(result, expected)
 
-    def test_indent_section_level_section(self):
+    def test_indent_section_level_section(self) -> None:
         """Test section level indentation."""
         input_lines = [
             "\\section{First Section}",
@@ -113,33 +106,36 @@ class TestTexFormatter(unittest.TestCase):
             "\\subsection{Subsection}",
             "Subsection content",
             "\\section{Second Section}",
-            "More content"
+            "More content",
         ]
+
         expected = [
             "\\section{First Section}",
             "    Section content",
             "    \\subsection{Subsection}",
             "    Subsection content",
             "\\section{Second Section}",
-            "    More content"
+            "    More content",
         ]
-        result = indent_section_level(input_lines, "\\section", ["\\chapter", "\\section"])
+
+        result = texformatter.indent_section_level(
+            input_lines, "\\section", ["\\chapter", "\\section"]
+        )
+
         self.assertEqual(result, expected)
 
-    def test_indent_section_level_custom_indent(self):
+    def test_indent_section_level_custom_indent(self) -> None:
         """Test section level indentation with custom indent string."""
-        input_lines = [
-            "\\section{Test Section}",
-            "Content here"
-        ]
-        expected = [
-            "\\section{Test Section}",
-            "  Content here"
-        ]
-        result = indent_section_level(input_lines, "\\section", ["\\section"], "  ")
+        input_lines = ["\\section{Test Section}", "Content here"]
+        expected = ["\\section{Test Section}", "  Content here"]
+
+        result = texformatter.indent_section_level(
+            input_lines, "\\section", ["\\section"], "  "
+        )
+
         self.assertEqual(result, expected)
 
-    def test_indent_latex_complete(self):
+    def test_indent_latex_complete(self) -> None:
         """Test complete LaTeX indentation."""
         input_code = """\\documentclass{article}
 \\begin{document}
@@ -168,37 +164,37 @@ Subsection content
             "        \\end{itemize}",
             "        \\subsection{Subsection}",
             "            Subsection content",
-            "\\end{document}"
+            "\\end{document}",
         ]
-        expected = "\n".join(expected_lines)
 
-        result = indent_latex(input_code)
+        expected = "\n".join(expected_lines)
+        result = texformatter.indent_latex(input_code)
         self.assertEqual(result, expected)
 
-    def test_indent_latex_with_tabs(self):
+    def test_indent_latex_with_tabs(self) -> None:
         """Test complete LaTeX indentation with tabs."""
         input_code = """\\begin{document}
 \\section{Section}
 Content
 \\end{document}"""
 
-        result = indent_latex(input_code, "\t")
+        result = texformatter.indent_latex(input_code, "\t")
         lines = result.split("\n")
-        
+
         # Check that tabs are used instead of spaces
         self.assertTrue(lines[1].startswith("\t\\section"))
         self.assertTrue(lines[2].startswith("\t\tContent"))
 
-    def test_indent_latex_with_custom_spaces(self):
+    def test_indent_latex_with_custom_spaces(self) -> None:
         """Test complete LaTeX indentation with custom space count."""
         input_code = """\\begin{document}
 \\section{Section}
 Content
 \\end{document}"""
 
-        result = indent_latex(input_code, "  ")
+        result = texformatter.indent_latex(input_code, "  ")
         lines = result.split("\n")
-        
+
         # Check that 2 spaces are used per level
         self.assertTrue(lines[1].startswith("  \\section"))
         self.assertTrue(lines[2].startswith("    Content"))
@@ -207,40 +203,43 @@ Content
 class TestMainFunction(unittest.TestCase):
     """Test cases for the main function."""
 
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.test_file = os.path.join(self.temp_dir, "test.tex")
-        
+
         # Create a test LaTeX file
         with open(self.test_file, "w") as f:
             f.write("\\begin{document}\nHello\n\\end{document}\n")
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         """Clean up test fixtures."""
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
+
         backup_file = self.test_file + ".bak"
+
         if os.path.exists(backup_file):
             os.remove(backup_file)
+
         os.rmdir(self.temp_dir)
 
-    def test_backup_creation(self):
+    def test_backup_creation(self) -> None:
         """Test that backup files are created when requested."""
         import sys
         from unittest.mock import patch
-        
+
         # Mock command line arguments
         test_args = [
-            'texformatter.py', 
-            self.test_file, 
-            '--in-place', 
-            '--backup'
+            "texformatter.py",
+            self.test_file,
+            "--in-place",
+            "--backup",
         ]
-        
-        with patch.object(sys, 'argv', test_args):
-            main()
-        
+
+        with patch.object(sys, "argv", test_args):
+            texformatter.main()
+
         # Check that backup file was created
         backup_file = self.test_file + ".bak"
         self.assertTrue(os.path.exists(backup_file))
