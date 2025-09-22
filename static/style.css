@@ -1,3 +1,6 @@
+/* TODO: refactor the time transitions to use variables in a config
+       file so that they can be adjusted easily */
+
 :root {
     --primary-bg: #f5f2ed;        /* warm cream background */
     --secondary-bg: #ede7d9;      /* slightly darker cream */
