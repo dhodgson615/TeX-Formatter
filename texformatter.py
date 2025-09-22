@@ -52,6 +52,7 @@ def pass2(lines: list[str]) -> list[str]:
         if stripped.startswith("\\chapter"):
             new_indent = current_indent
             in_chapter = True
+
         elif in_chapter:
             if (
                 any(
