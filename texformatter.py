@@ -222,7 +222,7 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    
+
     with open(args.file, "r", encoding="utf-8") as f:
         latex_code: str = f.read()
     
