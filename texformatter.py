@@ -6,9 +6,11 @@ from __future__ import annotations
 
 import argparse
 import re
+import shutil
+import os
 
 
-def indent_environments(lines: list[str]) -> list[str]:  # TODO: unit tests
+def indent_environments(lines: list[str], indent_str: str = "    ") -> list[str]:
     """Indents LaTeX environments defined by \\begin{...} and
     \\end{...}
     """
@@ -21,7 +23,7 @@ def indent_environments(lines: list[str]) -> list[str]:  # TODO: unit tests
         if stripped.startswith("\\end{") and env_stack:
             env_stack.pop()
 
-        indented_line = "    " * len(env_stack) + stripped
+        indented_line = indent_str * len(env_stack) + stripped
         new_lines.append(indented_line)
 
         if stripped.startswith("\\begin{"):
@@ -34,18 +36,21 @@ def indent_environments(lines: list[str]) -> list[str]:  # TODO: unit tests
 
 
 def indent_section_level(
-    lines: list[str], command: str, exit_commands: list[str]
-) -> list[str]:  # TODO: unit tests
+    lines: list[str], command: str, exit_commands: list[str], indent_str: str = "    "
+) -> list[str]:
     """Generic indentation function for sections, subsections, etc."""
     in_section = False
     new_lines = []
 
     for line in lines:
         stripped = line.strip()
-        current_indent = len(line) - len(line.lstrip(" "))
+        # Count current indentation in terms of indent_str units
+        current_line_lstripped = line.lstrip(" \t")
+        current_indent_chars = len(line) - len(current_line_lstripped)
+        current_indent_level = current_indent_chars // len(indent_str) if len(indent_str) > 0 else 0
 
         if stripped.startswith(command):
-            new_indent = current_indent
+            new_indent_level = current_indent_level
             in_section = True
 
         elif in_section:
@@ -53,26 +58,26 @@ def indent_section_level(
                 any(stripped.startswith(cmd) for cmd in exit_commands)
                 or stripped == "\\end{document}"
             ):
-                new_indent = current_indent
+                new_indent_level = current_indent_level
                 in_section = False
 
             else:
-                new_indent = current_indent + 4
+                new_indent_level = current_indent_level + 1
 
         else:
-            new_indent = current_indent
+            new_indent_level = current_indent_level
 
-        new_lines.append(" " * new_indent + stripped)
+        new_lines.append(indent_str * new_indent_level + stripped)
 
     return new_lines
 
 
-def indent_latex(code: str) -> str:  # TODO: unit tests
+def indent_latex(code: str, indent_str: str = "    ") -> str:
     """Main Function: Indent LaTeX Code"""
     lines = code.split("\n")
 
     # First pass: environment indentation
-    lines = indent_environments(lines)
+    lines = indent_environments(lines, indent_str)
 
     # Define section levels and their exit conditions
     section_levels = [
@@ -87,13 +92,13 @@ def indent_latex(code: str) -> str:  # TODO: unit tests
 
     # Apply each section level indentation in sequence
     for command, exit_commands in section_levels:
-        lines = indent_section_level(lines, command, exit_commands)
+        lines = indent_section_level(lines, command, exit_commands, indent_str)
 
     return "\n".join(lines)
 
 
-# TODO: make actual main() function
-if __name__ == "__main__":
+def main():
+    """Main function for the LaTeX formatter."""
     parser = argparse.ArgumentParser(
         description="Format LaTeX source code with proper indentation."
     )
@@ -107,22 +112,57 @@ if __name__ == "__main__":
         help="Edit the file in place (default: print to stdout)",
     )
 
+    parser.add_argument(
+        "-b",
+        "--backup",
+        action="store_true",
+        help="Create a backup of the original file before editing in place",
+    )
+
+    parser.add_argument(
+        "-s",
+        "--spaces",
+        type=int,
+        default=4,
+        help="Number of spaces per indent level (default: 4)",
+    )
+
+    parser.add_argument(
+        "-t",
+        "--tabs",
+        action="store_true",
+        help="Use tab character instead of spaces for indentation",
+    )
+
     args = parser.parse_args()
 
+    # Determine the indentation string
+    if args.tabs:
+        indent_str = "\t"
+    else:
+        indent_str = " " * args.spaces
+
+    # Read the input file
     with open(args.file, "r", encoding="utf-8") as f:
         latex_code = f.read()
 
-    formatted_code = indent_latex(latex_code)
+    # Format the code
+    formatted_code = indent_latex(latex_code, indent_str)
 
     if args.in_place:
+        # Create backup if requested
+        if args.backup:
+            backup_file = args.file + ".bak"
+            shutil.copy2(args.file, backup_file)
+            print(f"Backup created: {backup_file}")
+
+        # Write formatted code back to the file
         with open(args.file, "w", encoding="utf-8") as f:
             f.write(formatted_code)
-
+        print(f"File formatted in place: {args.file}")
     else:
         print("\n\n" + formatted_code + "\n\n")
 
-# TODO: add command line option to back up original file
-# TODO: add command line option to specify number of spaces per indent level
-# TODO: add command line option to specify tab character instead of spaces
-# TODO: add realistic dummy LaTeX files for testing
-# TODO: add unit tests for all functions
+
+if __name__ == "__main__":
+    main()
