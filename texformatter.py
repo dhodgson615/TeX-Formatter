@@ -121,8 +121,8 @@ def pass4(lines: list[str]) -> list[str]:
     are indented until a new chapter/section/subsection or end of the
     document.
     """
-    in_subsection: bool = False
-    new_lines: list[str] = []
+    in_subsection = False
+    new_lines = []
 
     for line in lines:
         stripped: str = line.strip()
