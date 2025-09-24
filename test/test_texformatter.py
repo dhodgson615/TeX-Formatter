@@ -1,7 +1,11 @@
 """Unit tests for texformatter.py functions."""
 
-import os
 import sys
+import os
+
+# Add the src directory to the Python path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
 import tempfile
 import unittest
 import unittest.mock

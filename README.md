@@ -136,19 +136,29 @@ The web interface is built using:
 
 File Structure:
 ```
-├── app.py           # Flask application
+├── app.py           # Flask application entry point
+├── texformatter.py  # CLI entry point
+├── src/
+│   ├── app.py       # Flask application logic
+│   └── texformatter.py  # Core formatting logic
+├── test/
+│   └── test_texformatter.py  # Unit tests
+├── examples/
+│   ├── simple_document.tex   # Sample LaTeX document
+│   ├── test_document.tex     # Test document with various features
+│   └── environments_test.tex # Environment testing document
 ├── templates/
 │   └── index.html   # Main page template
 ├── static/
 │   ├── style.css    # Stylesheet
 │   └── script.js    # JavaScript functionality
-└── texformatter.py  # Core formatting logic
+└── requirements.txt # Python dependencies
 ```
 
 You can customize the web interface by:
 - Modifying `static/style.css` for appearance
 - Updating `static/script.js` for functionality
 - Editing `templates/index.html` for layout
-- Adjusting `app.py` for server behavior
+- Adjusting `src/app.py` for server behavior
 
-The core formatting logic is in `texformatter.py` and is shared between the CLI and web interface.
+The core formatting logic is in `src/texformatter.py` and is shared between the CLI and web interface.
