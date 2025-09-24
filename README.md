@@ -8,27 +8,28 @@ visually easier to find.
 
 ## Functionality
 
-The script performs the indentation in five distinct passes:
+The script organizes indentation in five progressive stages, each corresponding
+to a different structural element in a LaTeX document. It begins with environments
+such as those defined by `\begin{...}` and `\end{...}`. When the script encounters
+a `\begin`, the indentation level increases, and it decreases again at the matching
+`\end`.  
 
-1.  **Environment Indentation:** Handles LaTeX environments defined by
-    `\begin{...}` and `\end{...}`. It increases the indentation level when a
-    `\begin` command is encountered and decreases it upon seeing an `\end`.
+Chapters are handled next. Whenever a `\chapter` command appears, the lines that
+follow are indented more deeply, and that indentation continues until another
+structural command such as a new chapter or section appears, or until the document
+ends. Sections work the same way, introducing indentation that lasts until another
+major marker is found.  
 
-2.  **Chapter Indentation:** Indents the content within `\chapter` commands. It
-    increases the indentation level for lines following a `\chapter` until
-    another chapter, section, or the end of the document is found.
+The pattern continues with subsections. After a `\subsection` command, the script
+applies indentation until a new chapter, section, or subsection is reached, or
+until the document closes. Finally, the smallest recognized unit is the
+subsubsection. Content beneath a `\subsubsection` line is indented until the
+script encounters another chapter, section, subsection, or subsubsection, at which
+point the indentation level resets.  
 
-3.  **Section Indentation:** Similarly, indents the content within `\section`
-    commands. Indentation increases until another chapter, section, or the end
-    of the document is encountered.
-
-4.  **Subsection Indentation:** Handles indentation for content within
-    `\subsection` commands. The indentation continues until a chapter, section,
-    subsection, or the end of the document is found.
-
-5.  **Subsubsection Indentation:** Applies indentation to content within
-    `\subsubsection` commands, stopping when a chapter, section, subsection,
-    subsubsection, or the end of the document is reached.
+In effect, each level of document structure deepens the indentation, and the script
+adjusts automatically as the text rises back out of those nested structures. adjusts
+automatically as the text rises back out of those nested structures.
 
 ## Installation
 
