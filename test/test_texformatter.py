@@ -215,6 +215,97 @@ class TestTexFormatter(unittest.TestCase):
         self.assertTrue(lines[1].startswith("  \\section"))
         self.assertTrue(lines[2].startswith("    Content"))
 
+    def test_verbatim_environment_preserves_content(self) -> None:
+        """Test that content inside verbatim environments is preserved exactly."""
+        input_lines = [
+            "\\begin{document}",
+            "Some text",
+            "\\begin{verbatim}",
+            "Code block",
+            "    print(\"Hello World\")",
+            "if True:",
+            "    pass",
+            "\\end{verbatim}",
+            "More text",
+            "\\end{document}",
+        ]
+
+        expected = [
+            "\\begin{document}",
+            "    Some text",
+            "    \\begin{verbatim}",
+            "Code block",
+            "    print(\"Hello World\")",
+            "if True:",
+            "    pass",
+            "    \\end{verbatim}",
+            "    More text",
+            "\\end{document}",
+        ]
+
+        result = texformatter.indent_environments(input_lines)
+        self.assertEqual(result, expected)
+
+    def test_verbatim_environment_with_sections(self) -> None:
+        """Test that verbatim content is preserved when mixed with sections."""
+        input_code = """\\begin{document}
+\\section{Code Examples}
+Here is some code:
+\\begin{verbatim}
+def hello():
+    print("Hello")
+    if True:
+        print("World")
+\\end{verbatim}
+That was the code.
+\\end{document}"""
+
+        expected = """\\begin{document}
+    \\section{Code Examples}
+        Here is some code:
+        \\begin{verbatim}
+def hello():
+    print("Hello")
+    if True:
+        print("World")
+        \\end{verbatim}
+        That was the code.
+\\end{document}"""
+
+        result = texformatter.indent_latex(input_code)
+        self.assertEqual(result, expected)
+
+    def test_nested_verbatim_in_itemize(self) -> None:
+        """Test verbatim environment inside other environments."""
+        input_lines = [
+            "\\begin{document}",
+            "\\begin{itemize}",
+            "\\item Here is code:",
+            "\\begin{verbatim}",
+            "x = 1",
+            "  y = 2",
+            "\\end{verbatim}",
+            "\\item More text",
+            "\\end{itemize}",
+            "\\end{document}",
+        ]
+
+        expected = [
+            "\\begin{document}",
+            "    \\begin{itemize}",
+            "        \\item Here is code:",
+            "        \\begin{verbatim}",
+            "x = 1",
+            "  y = 2",
+            "        \\end{verbatim}",
+            "        \\item More text",
+            "    \\end{itemize}",
+            "\\end{document}",
+        ]
+
+        result = texformatter.indent_environments(input_lines)
+        self.assertEqual(result, expected)
+
 
 class TestMainFunction(unittest.TestCase):
     """Test cases for the main function."""

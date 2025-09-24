@@ -17,21 +17,39 @@ def indent_environments(
     """
     env_stack: list[str] = []
     new_lines = []
+    in_verbatim = False
 
     for line in lines:
         stripped = line.strip()
 
+        # Check if we're ending a verbatim environment
+        if stripped.startswith("\\end{verbatim}"):
+            in_verbatim = False
+
+        # If we're inside verbatim, preserve the original line exactly (except for environment boundaries)
+        if in_verbatim and not stripped.startswith("\\end{verbatim}"):
+            new_lines.append(line)
+            continue
+
+        # Handle ending environments
         if stripped.startswith("\\end{") and env_stack:
             env_stack.pop()
 
+        # Apply indentation
         indented_line = indent_str * len(env_stack) + stripped
         new_lines.append(indented_line)
 
+        # Handle beginning environments
         if stripped.startswith("\\begin{"):
             env_match = re.match(r"\\begin\{([^}]+)}", stripped)
 
             if env_match:
-                env_stack.append(env_match.group(1))
+                env_name = env_match.group(1)
+                env_stack.append(env_name)
+                
+                # Check if we're starting a verbatim environment
+                if env_name == "verbatim":
+                    in_verbatim = True
 
     return new_lines
 
@@ -44,10 +62,23 @@ def indent_section_level(
 ) -> list[str]:
     """Generic indentation function for sections, subsections, etc."""
     in_section = False
+    in_verbatim = False
     new_lines = []
 
     for line in lines:
         stripped = line.strip()
+        
+        # Track verbatim environment state
+        if stripped.startswith("\\begin{verbatim}"):
+            in_verbatim = True
+        elif stripped.startswith("\\end{verbatim}"):
+            in_verbatim = False
+        
+        # If we're inside verbatim, preserve the line exactly
+        if in_verbatim and not stripped.startswith("\\begin{verbatim}") and not stripped.startswith("\\end{verbatim}"):
+            new_lines.append(line)
+            continue
+            
         # Count current indentation in terms of indent_str units
         current_line_lstripped = line.lstrip(" \t")
         current_indent_chars = len(line) - len(current_line_lstripped)
