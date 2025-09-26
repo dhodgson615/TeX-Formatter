@@ -1,24 +1,26 @@
 """Simple web interface for TeX-Formatter. This Flask app provides a
-minimalistic web interface for formatting LaTeX code.
-"""
+minimalistic web interface for formatting LaTeX code."""
 
 from __future__ import annotations
 
+import os
 from typing import Any
 
-import os
 from flask import Flask, jsonify, render_template, request
 
+# TODO: fix relative import to use `from <package> import <module> as <name>`
 try:
     from . import texformatter
+
 except ImportError:
-    # Fallback for when the module is imported directly
     import texformatter
 
-# Configure Flask to look for templates and static files from the parent directory
-app = Flask(__name__, 
-           template_folder=os.path.join(os.path.dirname(__file__), '..', 'templates'),
-           static_folder=os.path.join(os.path.dirname(__file__), '..', 'static'))
+# Flask app setup
+app = Flask(
+    __name__,
+    template_folder=os.path.join(os.path.dirname(__file__), "..", "templates"),
+    static_folder=os.path.join(os.path.dirname(__file__), "..", "static"),
+)
 
 
 @app.route("/")
@@ -44,6 +46,3 @@ def format_latex() -> tuple[Any, int] | Any:  # TODO: fix type
 
     except Exception as e:
         return jsonify({"error": f"Error formatting code: {str(e)}"}), 500
-
-
-# Entry point moved to ../app.py

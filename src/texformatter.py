@@ -26,7 +26,8 @@ def indent_environments(
         if stripped.startswith("\\end{verbatim}"):
             in_verbatim = False
 
-        # If we're inside verbatim, preserve the original line exactly (except for environment boundaries)
+        # If we're inside verbatim, preserve the original line exactly (except
+        # for environment boundaries)
         if in_verbatim and not stripped.startswith("\\end{verbatim}"):
             new_lines.append(line)
             continue
@@ -46,7 +47,7 @@ def indent_environments(
             if env_match:
                 env_name = env_match.group(1)
                 env_stack.append(env_name)
-                
+
                 # Check if we're starting a verbatim environment
                 if env_name == "verbatim":
                     in_verbatim = True
@@ -67,18 +68,23 @@ def indent_section_level(
 
     for line in lines:
         stripped = line.strip()
-        
+
         # Track verbatim environment state
         if stripped.startswith("\\begin{verbatim}"):
             in_verbatim = True
+
         elif stripped.startswith("\\end{verbatim}"):
             in_verbatim = False
-        
+
         # If we're inside verbatim, preserve the line exactly
-        if in_verbatim and not stripped.startswith("\\begin{verbatim}") and not stripped.startswith("\\end{verbatim}"):
+        if (
+            in_verbatim
+            and not stripped.startswith("\\begin{verbatim}")
+            and not stripped.startswith("\\end{verbatim}")
+        ):
             new_lines.append(line)
             continue
-            
+
         # Count current indentation in terms of indent_str units
         current_line_lstripped = line.lstrip(" \t")
         current_indent_chars = len(line) - len(current_line_lstripped)
