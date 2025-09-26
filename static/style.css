@@ -481,3 +481,32 @@ textarea::placeholder {
         min-width: 120px;
     }
 }
+
+/* LaTeX logo styling */
+.latex-logo {
+    position: relative;
+    display: inline-block;
+    font-family: 'Times New Roman', 'Computer Modern', serif;
+    font-weight: normal;
+}
+
+.latex-logo .latex-la {
+    text-transform: uppercase;
+    font-size: 1em;
+    position: relative;
+}
+
+.latex-logo .latex-te {
+    text-transform: uppercase;
+    font-size: 0.7em;
+    position: relative;
+    top: 0.15em;
+    left: -0.15em;
+}
+
+.latex-logo .latex-x {
+    text-transform: uppercase;
+    font-size: 1em;
+    position: relative;
+    left: -0.25em;
+}

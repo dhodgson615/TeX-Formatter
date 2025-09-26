@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.formatBtn.textContent = 'Formatting...';
             elements.formatterSection.classList.add('loading');
         } else {
-            elements.formatBtn.textContent = 'Format LaTeX';
+            elements.formatBtn.innerHTML = 'Format <span class="latex-logo"><span class="latex-la">L</span><span class="latex-te">a</span><span class="latex-x">T</span>e<span class="latex-x">X</span></span>';
             elements.formatterSection.classList.remove('loading');
             updateButtonStates();
         }
