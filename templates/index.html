@@ -1,107 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TeX-Formatter - LaTeX Code Formatter</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="header-content">
-                <div class="title-section">
-                    <h1>TeX-Formatter</h1>
-                    <p class="subtitle">Professional LaTeX Code Formatting</p>
-                </div>
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-                    <span class="theme-icon">🌙</span>
-                </button>
-            </div>
-        </header>
-
-        <main>
-            <div class="formatter-section">
-                <div class="text-area-container">
-                    <div class="input-section">
-                        <h2>Paste Text Here</h2>
-                        <textarea id="latex-input" placeholder="Paste your LaTeX code here..."></textarea>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TeX-Formatter - LaTeX Code Formatter</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="header-content">
+                    <div class="title-section">
+                        <h1>TeX-Formatter</h1>
+                        <p class="subtitle">Quality LaTeX Code Formatting</p>
                     </div>
-                    
-                    <div class="controls">
-                        <button id="format-btn" class="format-button">Format LaTeX</button>
-                        <div class="indent-options">
-                            <div class="indent-selector-group">
-                                <label for="indent-number">Number:</label>
-                                <select id="indent-number">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4" selected>4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="12">12</option>
-                                    <option value="16">16</option>
-                                    <option value="20">20</option>
-                                </select>
-                            </div>
-                            <div class="indent-selector-group">
-                                <label for="indent-type">Type:</label>
-                                <select id="indent-type">
-                                    <option value="spaces" selected>Spaces</option>
-                                    <option value="tabs">Tabs</option>
-                                </select>
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </header>
+            <main>
+                <div class="formatter-section">
+                    <div class="text-area-container">
+                        <div class="input-section">
+                            <h2>Paste Text Here</h2>
+                            <textarea id="latex-input" placeholder="Paste your LaTeX code here..."></textarea>
+                        </div>
+                        <div class="controls">
+                            <button id="format-btn" class="format-button">Format LaTeX</button>
+                            <div class="indent-options">
+                                <div class="indent-selector-group">
+                                    <label for="indent-number">Number:</label>
+                                    <select id="indent-number">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4" selected>4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="12">12</option>
+                                        <option value="16">16</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </div>
+                                <div class="indent-selector-group">
+                                    <label for="indent-type">Type:</label>
+                                    <select id="indent-type">
+                                        <option value="spaces" selected>Spaces</option>
+                                        <option value="tabs">Tabs</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <div class="output-section">
+                            <h2>Output</h2>
+                            <textarea id="latex-output"
+                                      readonly
+                                      placeholder="Formatted LaTeX code will appear here..."></textarea>
+                            <button id="copy-btn" class="copy-button" disabled>Copy to Clipboard</button>
+                        </div>
                     </div>
-                    
-                    <div class="output-section">
-                        <h2>Output</h2>
-                        <textarea id="latex-output" readonly placeholder="Formatted LaTeX code will appear here..."></textarea>
-                        <button id="copy-btn" class="copy-button" disabled>Copy to Clipboard</button>
+                </div>
+            </main>
+            <section class="technical-details">
+                <h2>How It Works</h2>
+                <div class="details-content">
+                    <div class="overview">
+                        <h3>Overview</h3>
+                        <p>
+                            TeX-Formatter is a Python script that automatically formats LaTeX files using a multi-pass indentation system. It converts LaTeX source code into hierarchically indented code that is easier to read, edit, and maintain.
+                        </p>
+                    </div>
+                    <div class="formatting-steps">
+                        <h3>Formatting Process</h3>
+                        <p>
+                            The formatter applies indentation through five distinct passes, each handling specific LaTeX constructs:
+                        </p>
+                        <p>
+                            The formatting process begins with Environment Indentation, which handles LaTeX environments defined by <code>\begin{...}</code> and <code>\end{...}</code>. Content within environments is automatically indented to show the structure. Next, Chapter Indentation indents content within <code>\chapter</code> commands. The indentation continues until another chapter, section, or document end is encountered. The third pass involves Section Indentation which similarly handles <code>\section</code> commands, creating visual hierarchy that makes document structure immediately apparent. Following this, Subsection Indentation processes <code>\subsection</code> commands, maintaining consistent nesting levels throughout the document. Finally, Subsubsection Indentation handles the finest level of sectioning with <code>\subsubsection</code> commands, ensuring even deeply nested content remains properly organized.
+                        </p>
+                    </div>
+                    <div class="technical-implementation">
+                        <h3>Technical Implementation</h3>
+                        <p>
+                            The formatter uses a state-machine approach, keeping track of the environment stacks and sections. It analyzes the document structure in each pass and applies the right amount of indentation based on how deeply nested the current section is. The algorithm makes sure the original content stays the same while making it easier to read with consistent spacing and a clear hierarchy.
+                        </p>
+                        <p>Key features include:</p>
+                        <ul>
+                            <li>Configurable indentation (spaces or tabs)</li>
+                            <li>Preservation of original LaTeX syntax</li>
+                            <li>Intelligent handling of nested structures</li>
+                            <li>Support for all standard LaTeX document classes</li>
+                            <li>Safe processing that maintains document integrity</li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </main>
-
-        <section class="technical-details">
-            <h2>How It Works</h2>
-            <div class="details-content">
-                <div class="overview">
-                    <h3>Overview</h3>
-                    <p>TeX-Formatter is a Python script that automatically formats LaTeX files using a multi-pass indentation system. It converts LaTeX source code into hierarchically indented code that is easier to read, edit, and maintain.</p>
-                </div>
-
-                <div class="formatting-steps">
-                    <h3>Formatting Process</h3>
-                    <p>The formatter applies indentation through five distinct passes, each handling specific LaTeX constructs:</p>
-
-                    <p>
-                        The formatting process begins with Environment Indentation, which handles LaTeX environments defined by <code>\begin{...}</code> and <code>\end{...}</code>. Content within environments is automatically indented to show the structure. Next, Chapter Indentation indents content within <code>\chapter</code> commands. The indentation continues until another chapter, section, or document end is encountered. The third pass involves Section Indentation which similarly handles <code>\section</code> commands, creating visual hierarchy that makes document structure immediately apparent. Following this, Subsection Indentation processes <code>\subsection</code> commands, maintaining consistent nesting levels throughout the document. Finally, Subsubsection Indentation handles the finest level of sectioning with <code>\subsubsection</code> commands, ensuring even deeply nested content remains properly organized.
-                    </p>
-                </div>
-
-                <div class="technical-implementation">
-                    <h3>Technical Implementation</h3>
-                    <p>The formatter uses a state-machine approach, keeping track of the environment stacks and sections. It analyzes the document structure in each pass and applies the right amount of indentation based on how deeply nested the current section is. The algorithm makes sure the original content stays the same while making it easier to read with consistent spacing and a clear hierarchy.</p>
-                    
-                    <p>Key features include:</p>
-                    <ul>
-                        <li>Configurable indentation (spaces or tabs)</li>
-                        <li>Preservation of original LaTeX syntax</li>
-                        <li>Intelligent handling of nested structures</li>
-                        <li>Support for all standard LaTeX document classes</li>
-                        <li>Safe processing that maintains document integrity</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
+            </section>
+        </div>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
 </html>
