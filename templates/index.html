@@ -2,9 +2,11 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
         <title>TeX-Formatter - LaTeX Code Formatter</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet"
+              href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
         <div class="container">
@@ -14,7 +16,9 @@
                         <h1>TeX-Formatter</h1>
                         <p class="subtitle">Quality LaTeX Code Formatting</p>
                     </div>
-                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <button id="theme-toggle"
+                            class="theme-toggle"
+                            aria-label="Toggle dark mode">
                         <span class="theme-icon">🌙</span>
                     </button>
                 </div>
@@ -24,7 +28,8 @@
                     <div class="text-area-container">
                         <div class="input-section">
                             <h2>Paste Text Here</h2>
-                            <textarea id="latex-input" placeholder="Paste your LaTeX code here..."></textarea>
+                            <textarea id="latex-input"
+                                      placeholder="Paste your LaTeX code here..."></textarea>
                         </div>
                         <div class="controls">
                             <button id="format-btn" class="format-button">Format LaTeX</button>
@@ -50,7 +55,8 @@
                                 <div class="indent-selector-group">
                                     <label for="indent-type">Type:</label>
                                     <select id="indent-type">
-                                        <option value="spaces" selected>Spaces</option>
+                                        <option value="spaces"
+                                                selected>Spaces</option>
                                         <option value="tabs">Tabs</option>
                                     </select>
                                 </div>
@@ -61,7 +67,9 @@
                             <textarea id="latex-output"
                                       readonly
                                       placeholder="Formatted LaTeX code will appear here..."></textarea>
-                            <button id="copy-btn" class="copy-button" disabled>Copy to Clipboard</button>
+                            <button id="copy-btn"
+                                    class="copy-button"
+                                    disabled>Copy to Clipboard</button>
                         </div>
                     </div>
                 </div>
@@ -72,22 +80,54 @@
                     <div class="overview">
                         <h3>Overview</h3>
                         <p>
-                            TeX-Formatter is a Python script that automatically formats LaTeX files using a multi-pass indentation system. It converts LaTeX source code into hierarchically indented code that is easier to read, edit, and maintain.
+                            TeX-Formatter is a Python script that automatically
+                            formats LaTeX files using a multi-pass indentation
+                            system. It converts LaTeX source code into
+                            hierarchically indented code that is easier to
+                            read, edit, and maintain.
                         </p>
                     </div>
                     <div class="formatting-steps">
                         <h3>Formatting Process</h3>
                         <p>
-                            The formatter applies indentation through five distinct passes, each handling specific LaTeX constructs:
+                            The formatter applies indentation through five
+                            distinct passes, each handling specific LaTeX
+                            constructs:
                         </p>
                         <p>
-                            The formatting process begins with Environment Indentation, which handles LaTeX environments defined by <code>\begin{...}</code> and <code>\end{...}</code>. Content within environments is automatically indented to show the structure. Next, Chapter Indentation indents content within <code>\chapter</code> commands. The indentation continues until another chapter, section, or document end is encountered. The third pass involves Section Indentation which similarly handles <code>\section</code> commands, creating visual hierarchy that makes document structure immediately apparent. Following this, Subsection Indentation processes <code>\subsection</code> commands, maintaining consistent nesting levels throughout the document. Finally, Subsubsection Indentation handles the finest level of sectioning with <code>\subsubsection</code> commands, ensuring even deeply nested content remains properly organized.
+                            The formatting process begins with Environment
+                            Indentation, which handles LaTeX environments
+                            defined by <code>\begin{...}</code> and
+                            <code>\end{...}</code>. Content within environments
+                            is automatically indented to show the structure.
+                            Next, Chapter Indentation indents content within
+                            <code>\chapter</code> commands. The indentation
+                            continues until another chapter, section, or
+                            document end is encountered. The third pass
+                            involves Section Indentation which similarly
+                            handles <code>\section</code> commands, creating
+                            visual hierarchy that makes document structure
+                            immediately apparent. Following this, Subsection
+                            Indentation processes <code>\subsection</code>
+                            commands, maintaining consistent nesting levels
+                            throughout the document. Finally, Subsubsection
+                            Indentation handles the finest level of sectioning
+                            with <code>\subsubsection</code> commands, ensuring
+                            even deeply nested content remains properly
+                            organized.
                         </p>
                     </div>
                     <div class="technical-implementation">
                         <h3>Technical Implementation</h3>
                         <p>
-                            The formatter uses a state-machine approach, keeping track of the environment stacks and sections. It analyzes the document structure in each pass and applies the right amount of indentation based on how deeply nested the current section is. The algorithm makes sure the original content stays the same while making it easier to read with consistent spacing and a clear hierarchy.
+                            The formatter uses a state-machine approach,
+                            keeping track of the environment stacks and
+                            sections. It analyzes the document structure in
+                            each pass and applies the right amount of
+                            indentation based on how deeply nested the current
+                            section is. The algorithm makes sure the original
+                            content stays the same while making it easier to
+                            read with consistent spacing and a clear hierarchy.
                         </p>
                         <p>Key features include:</p>
                         <ul>
