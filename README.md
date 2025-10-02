@@ -136,23 +136,23 @@ The web interface is built using:
 
 File Structure:
 ```
-├── app.py           # Flask application entry point
-├── texformatter.py  # CLI entry point
+├── app.py                     # Flask application entry point
+├── texformatter.py            # CLI entry point
 ├── src/
-│   ├── app.py       # Flask application logic
-│   └── texformatter.py  # Core formatting logic
+│   ├── app.py                 # Flask application logic
+│   └── texformatter.py        # Core formatting logic
 ├── test/
-│   └── test_texformatter.py  # Unit tests
+│   └── test_texformatter.py   # Unit tests
 ├── examples/
-│   ├── simple_document.tex   # Sample LaTeX document
-│   ├── test_document.tex     # Test document with various features
-│   └── environments_test.tex # Environment testing document
+│   ├── simple_document.tex    # Sample LaTeX document
+│   ├── test_document.tex      # Test document with various features
+│   └── environments_test.tex  # Environment testing document
 ├── templates/
-│   └── index.html   # Main page template
+│   └── index.html             # Main page template
 ├── static/
-│   ├── style.css    # Stylesheet
-│   └── script.js    # JavaScript functionality
-└── requirements.txt # Python dependencies
+│   ├── style.css              # Stylesheet
+│   └── script.js              # JavaScript functionality
+└── requirements.txt           # Python dependencies
 ```
 
 You can customize the web interface by:
