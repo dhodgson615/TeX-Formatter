@@ -1,16 +1,15 @@
 """Unit tests for texformatter.py functions."""
 
-import sys
 import os
-
-# Add the src directory to the Python path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
-
-import tempfile
-import unittest
+import subprocess
+import sys
 import unittest.mock
+from os import path, remove, rmdir
+from sys import executable
+from tempfile import mkdtemp
+from unittest import mock
 
-import texformatter
+from src import texformatter
 
 
 class TestTexFormatter(unittest.TestCase):
@@ -222,7 +221,7 @@ class TestTexFormatter(unittest.TestCase):
             "Some text",
             "\\begin{verbatim}",
             "Code block",
-            "    print(\"Hello World\")",
+            '    print("Hello World")',
             "if True:",
             "    pass",
             "\\end{verbatim}",
@@ -235,7 +234,7 @@ class TestTexFormatter(unittest.TestCase):
             "    Some text",
             "    \\begin{verbatim}",
             "Code block",
-            "    print(\"Hello World\")",
+            '    print("Hello World")',
             "if True:",
             "    pass",
             "    \\end{verbatim}",
@@ -312,7 +311,7 @@ class TestMainFunction(unittest.TestCase):
 
     def setUp(self) -> None:
         """Set up test fixtures."""
-        self.temp_dir = tempfile.mkdtemp()
+        self.temp_dir = mkdtemp()
         self.test_file = os.path.join(self.temp_dir, "test.tex")
 
         # Create a test LaTeX file
@@ -321,33 +320,49 @@ class TestMainFunction(unittest.TestCase):
 
     def tearDown(self) -> None:
         """Clean up test fixtures."""
-        if os.path.exists(self.test_file):
-            os.remove(self.test_file)
+        if path.exists(self.test_file):
+            remove(self.test_file)
 
         backup_file = self.test_file + ".bak"
 
-        if os.path.exists(backup_file):
-            os.remove(backup_file)
+        if path.exists(backup_file):
+            remove(backup_file)
 
-        os.rmdir(self.temp_dir)
+        rmdir(self.temp_dir)
 
     def test_backup_creation(self) -> None:
         """Test that backup files are created when requested."""
 
         # Mock command line arguments
-        test_args = [
+        argv_args = [
             "texformatter.py",
             self.test_file,
             "--in-place",
             "--backup",
         ]
 
-        with unittest.mock.patch.object(sys, "argv", test_args):
+        with mock.patch.object(sys, "argv", argv_args):
             texformatter.main()
 
         # Check that backup file was created
         backup_file = self.test_file + ".bak"
-        self.assertTrue(os.path.exists(backup_file))
+        self.assertTrue(path.exists(str(backup_file)))
+
+    def test_cli_entry_point(self) -> None:
+        """Test running texformatter.py as a script."""
+        result = subprocess.run(
+            [executable, "texformatter.py", "--help"],
+            capture_output=True,
+            text=True,
+        )
+        self.assertIn("usage", result.stdout)
+
+    def test_main_invalid_file(self) -> None:
+        """Test main() with a missing file argument."""
+        argv_args = ["texformatter.py", "nonexistent.tex"]
+        with mock.patch.object(sys, "argv", argv_args):
+            with self.assertRaises(FileNotFoundError):
+                texformatter.main()
 
 
 if __name__ == "__main__":

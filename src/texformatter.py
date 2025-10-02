@@ -4,9 +4,9 @@ subsubsections. Usage: python3 texformatter.py input.tex [-i]"""
 
 from __future__ import annotations
 
-import argparse
-import re
-import shutil
+from argparse import ArgumentParser
+from re import match
+from shutil import copy2
 
 
 def indent_environments(
@@ -26,8 +26,6 @@ def indent_environments(
         if stripped.startswith("\\end{verbatim}"):
             in_verbatim = False
 
-        # If we're inside verbatim, preserve the original line exactly (except
-        # for environment boundaries)
         if in_verbatim and not stripped.startswith("\\end{verbatim}"):
             new_lines.append(line)
             continue
@@ -42,7 +40,7 @@ def indent_environments(
 
         # Handle beginning environments
         if stripped.startswith("\\begin{"):
-            env_match = re.match(r"\\begin\{([^}]+)}", stripped)
+            env_match = match(r"\\begin\{([^}]+)}", stripped)
 
             if env_match:
                 env_name = env_match.group(1)
@@ -145,7 +143,7 @@ def indent_latex(code: str, indent_str: str = "    ") -> str:
 
 def main() -> None:
     """Main function for the LaTeX formatter."""
-    parser = argparse.ArgumentParser(
+    parser = ArgumentParser(
         description="Format LaTeX source code with proper indentation."
     )
 
@@ -200,7 +198,7 @@ def main() -> None:
         # Create backup if requested
         if args.backup:
             backup_file = args.file + ".bak"
-            shutil.copy2(args.file, backup_file)
+            copy2(args.file, backup_file)
             print(f"Backup created: {backup_file}")
 
         # Write formatted code back to the file

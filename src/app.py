@@ -3,23 +3,17 @@ minimalistic web interface for formatting LaTeX code."""
 
 from __future__ import annotations
 
-import os
+from os import path
 from typing import Any
 
 from flask import Flask, jsonify, render_template, request
 
-# TODO: fix relative import to use `from <package> import <module> as <name>`
-try:
-    from . import texformatter
+from src import texformatter
 
-except ImportError:
-    import texformatter
-
-# Flask app setup
 app = Flask(
     __name__,
-    template_folder=os.path.join(os.path.dirname(__file__), "..", "templates"),
-    static_folder=os.path.join(os.path.dirname(__file__), "..", "static"),
+    template_folder=path.join(path.dirname(__file__), "..", "templates"),
+    static_folder=path.join(path.dirname(__file__), "..", "static"),
 )
 
 
