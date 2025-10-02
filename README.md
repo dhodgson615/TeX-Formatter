@@ -1,4 +1,5 @@
 # TeX-Formatter
+
 Python script that automatically formats .tex files based on my somewhat
 opinionated formatting style. It formats LaTeX source code by applying a series
 of indentation passes. Each pass handles a specific LaTeX construct (e.g.,
@@ -35,7 +36,8 @@ automatically as the text rises back out of those nested structures.
 
 ### Command Line Interface
 
-The command line interface requires only Python 3.7+ and uses only standard library modules. No additional installation is needed:
+The command line interface requires only Python 3.7+ and uses only standard library
+modules. No additional installation is needed:
 
 ```bash
 python3 texformatter.py file.tex
