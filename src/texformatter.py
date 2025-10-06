@@ -37,9 +37,7 @@ def indent_environments(
             if env_match:
                 env_name = env_match.group(1)
                 env_stack.append(env_name)
-
-                if env_name == "verbatim":
-                    in_verbatim = True
+                in_verbatim = True if env_name == "verbatim" else in_verbatim
 
     return new_lines
 
