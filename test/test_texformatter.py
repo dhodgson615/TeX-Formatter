@@ -308,7 +308,7 @@ class TestMainFunction(TestCase):
     def setUp(self) -> None:
         """Set up test fixtures."""
         self.temp_dir = mkdtemp()
-        self.test_file = os.path.join(self.temp_dir, "test.tex")
+        self.test_file = path.join(self.temp_dir, "test.tex")
 
         # Create a test LaTeX file
         with open(self.test_file, "w") as f:
