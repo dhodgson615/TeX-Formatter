@@ -302,7 +302,7 @@ def hello():
         self.assertEqual(result, expected)
 
 
-class TestMainFunction(unittest.TestCase):
+class TestMainFunction(TestCase):
     """Test cases for the main function."""
 
     def setUp(self) -> None:
