@@ -125,10 +125,15 @@ def indent_latex(code: str, indent_str: str = "    ") -> str:
     ]
 
     # Apply each section level indentation in sequence
-    for command, exit_commands in section_levels:
-        lines = indent_section_level(lines, command, exit_commands, indent_str)
-
-    return "\n".join(lines)
+    return "\n".join(
+        reduce(
+            lambda lines, level: indent_section_level(
+                list(lines), level[0], level[1], indent_str
+            ),
+            section_levels,
+            lines,
+        )
+    )
 
 
 def main() -> None:
