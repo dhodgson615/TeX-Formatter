@@ -1,6 +1,3 @@
-"""Simple web interface for TeX-Formatter. This Flask app provides a
-minimalistic web interface for formatting LaTeX code."""
-
 from __future__ import annotations
 
 from os import path
