@@ -30,7 +30,6 @@ def indent_environments(
 
         new_lines.append(indent_str * len(env_stack) + stripped)
 
-        # Handle beginning environments
         if stripped.startswith("\\begin{"):
             env_match = match(r"\\begin\{([^}]+)}", stripped)
 
