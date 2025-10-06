@@ -28,9 +28,7 @@ def indent_environments(
         if stripped.startswith("\\end{") and env_stack:
             env_stack.pop()
 
-        # Apply indentation
-        indented_line = indent_str * len(env_stack) + stripped
-        new_lines.append(indented_line)
+        new_lines.append(indent_str * len(env_stack) + stripped)
 
         # Handle beginning environments
         if stripped.startswith("\\begin{"):
