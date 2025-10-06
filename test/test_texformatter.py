@@ -3,7 +3,7 @@ from os import path, remove, rmdir
 from subprocess import run
 from sys import executable
 from tempfile import mkdtemp
-from unittest import mock
+from unittest import TestCase, main, mock
 
 from src import texformatter
 
