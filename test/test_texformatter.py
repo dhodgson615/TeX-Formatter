@@ -351,6 +351,7 @@ class TestMainFunction(TestCase):
             capture_output=True,
             text=True,
         )
+
         self.assertIn("usage", result.stdout)
 
     def test_main_invalid_file(self) -> None:
