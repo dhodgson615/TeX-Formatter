@@ -8,7 +8,7 @@ from unittest import TestCase, main, mock
 from src import texformatter
 
 
-class TestTexFormatter(unittest.TestCase):
+class TestTexFormatter(TestCase):
     """Test cases for the LaTeX formatter functions."""
 
     def test_indent_environments_simple(self) -> None:
