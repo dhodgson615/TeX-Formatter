@@ -50,8 +50,7 @@ def indent_section_level(
     indent_str: str = "    ",
 ) -> list[str]:
     """Generic indentation function for sections, subsections, etc."""
-    in_section = False
-    in_verbatim = False
+    in_section, in_verbatim = False, False
     new_lines = []
 
     for line in lines:
