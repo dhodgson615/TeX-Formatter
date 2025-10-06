@@ -18,7 +18,6 @@ def indent_environments(
     for line in lines:
         stripped = line.strip()
 
-        # Check if we're ending a verbatim environment
         if stripped.startswith("\\end{verbatim}"):
             in_verbatim = False
 
