@@ -25,7 +25,6 @@ def indent_environments(
             new_lines.append(line)
             continue
 
-        # Handle ending environments
         if stripped.startswith("\\end{") and env_stack:
             env_stack.pop()
 
