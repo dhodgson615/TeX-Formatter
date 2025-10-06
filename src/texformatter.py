@@ -171,7 +171,6 @@ def main() -> None:
     args = parser.parse_args()
     indent_str = "\t" if args.tabs else " " * args.spaces
 
-    # Read the input file
     with open(args.file, "r", encoding="utf-8") as f:
         latex_code = f.read()
 
