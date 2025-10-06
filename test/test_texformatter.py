@@ -1,5 +1,4 @@
 import sys
-import unittest.mock
 from os import path, remove, rmdir
 from sys import executable
 from tempfile import mkdtemp
