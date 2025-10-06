@@ -169,8 +169,6 @@ def main() -> None:
     )
 
     args = parser.parse_args()
-
-    # Determine the indentation string
     indent_str = "\t" if args.tabs else " " * args.spaces
 
     # Read the input file
