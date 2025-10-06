@@ -108,30 +108,26 @@ def indent_section_level(
 
 def indent_latex(code: str, indent_str: str = "    ") -> str:
     """Main Function: Indent LaTeX Code"""
-    lines = code.split("\n")
-
-    # First pass: environment indentation
-    lines = indent_environments(lines, indent_str)
-
-    # Define section levels and their exit conditions
-    section_levels = [
-        ("\\chapter", ["\\chapter", "\\section"]),
-        ("\\section", ["\\chapter", "\\section"]),
-        ("\\subsection", ["\\chapter", "\\section", "\\subsection"]),
-        (
-            "\\subsubsection",
-            ["\\chapter", "\\section", "\\subsection", "\\subsubsection"],
-        ),
-    ]
-
-    # Apply each section level indentation in sequence
     return "\n".join(
         reduce(
             lambda lines, level: indent_section_level(
                 list(lines), level[0], level[1], indent_str
             ),
-            section_levels,
-            lines,
+            [
+                ("\\chapter", ["\\chapter", "\\section"]),
+                ("\\section", ["\\chapter", "\\section"]),
+                ("\\subsection", ["\\chapter", "\\section", "\\subsection"]),
+                (
+                    "\\subsubsection",
+                    [
+                        "\\chapter",
+                        "\\section",
+                        "\\subsection",
+                        "\\subsubsection",
+                    ],
+                ),
+            ],
+            indent_environments(code.split("\n"), indent_str),
         )
     )
 
