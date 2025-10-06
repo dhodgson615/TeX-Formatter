@@ -357,6 +357,7 @@ class TestMainFunction(TestCase):
     def test_main_invalid_file(self) -> None:
         """Test main() with a missing file argument."""
         argv_args = ["texformatter.py", "nonexistent.tex"]
+
         with mock.patch.object(sys, "argv", argv_args):
             with self.assertRaises(FileNotFoundError):
                 texformatter.main()
