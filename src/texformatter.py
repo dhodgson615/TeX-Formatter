@@ -42,7 +42,6 @@ def indent_environments(
                 env_name = env_match.group(1)
                 env_stack.append(env_name)
 
-                # Check if we're starting a verbatim environment
                 if env_name == "verbatim":
                     in_verbatim = True
 
