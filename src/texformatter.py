@@ -85,22 +85,22 @@ def indent_section_level(
             else 0
         )
 
-        if stripped.startswith(command):
-            new_indent_level = current_indent_level
-            in_section = True
-
-        elif in_section:
-            new_indent_level, in_section = (
-                (current_indent_level, False)
-                if (
-                    any(stripped.startswith(cmd) for cmd in exit_commands)
-                    or stripped == "\\end{document}"
+        new_indent_level, in_section = (
+            (current_indent_level, True)
+            if stripped.startswith(command)
+            else (
+                (
+                    (current_indent_level, False)
+                    if (
+                        any(stripped.startswith(cmd) for cmd in exit_commands)
+                        or stripped == "\\end{document}"
+                    )
+                    else (current_indent_level + 1, in_section)
                 )
-                else (current_indent_level + 1, in_section)
+                if in_section
+                else (current_indent_level, in_section)
             )
-
-        else:
-            new_indent_level = current_indent_level
+        )
 
         new_lines.append(indent_str * new_indent_level + stripped)
 
