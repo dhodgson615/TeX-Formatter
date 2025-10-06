@@ -1,5 +1,3 @@
-import os
-import subprocess
 import sys
 import unittest.mock
 from os import path, remove, rmdir
