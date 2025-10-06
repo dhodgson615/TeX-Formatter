@@ -1,5 +1,3 @@
-"""Main entry point for the Flask web interface."""
-
 from src.app import app
 
 if __name__ == "__main__":
