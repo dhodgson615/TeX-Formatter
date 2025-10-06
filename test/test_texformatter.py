@@ -346,7 +346,7 @@ class TestMainFunction(TestCase):
 
     def test_cli_entry_point(self) -> None:
         """Test running texformatter.py as a script."""
-        result = subprocess.run(
+        result = run(
             [executable, "texformatter.py", "--help"],
             capture_output=True,
             text=True,
