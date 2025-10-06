@@ -1,5 +1,3 @@
-"""Unit tests for texformatter.py functions."""
-
 import os
 import subprocess
 import sys
