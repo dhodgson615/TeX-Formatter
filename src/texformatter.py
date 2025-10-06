@@ -56,11 +56,15 @@ def indent_section_level(
         stripped = line.strip()
 
         # Track verbatim environment state
-        if stripped.startswith("\\begin{verbatim}"):
-            in_verbatim = True
-
-        elif stripped.startswith("\\end{verbatim}"):
-            in_verbatim = False
+        in_verbatim = (
+            True
+            if stripped.startswith("\\begin{verbatim}")
+            else (
+                False
+                if stripped.startswith("\\end{verbatim}")
+                else in_verbatim
+            )
+        )
 
         # If we're inside verbatim, preserve the line exactly
         if (
