@@ -4,7 +4,6 @@ from os import path
 from typing import Any
 
 from flask import Flask, jsonify, render_template, request
-
 from src import texformatter
 
 app = Flask(
