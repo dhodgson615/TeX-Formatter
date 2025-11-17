@@ -406,47 +406,47 @@ textarea::placeholder {
     .container {
         padding: 1rem;
     }
-    
+
     header h1 {
         font-size: 2.5rem;
     }
-    
+
     .header-content {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .theme-toggle {
         order: -1;
         align-self: flex-end;
     }
-    
+
     .text-area-container {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
     }
-    
+
     .controls {
         order: 2;
         padding: 1.5rem 0;
     }
-    
+
     .output-section {
         order: 3;
     }
-    
+
     textarea {
         height: 300px;
     }
-    
+
     .formatter-section {
         padding: 1.5rem;
     }
-    
+
     .technical-details {
         padding: 1.5rem;
     }
-    
+
     .details-content > div {
         padding: 1.5rem;
     }
@@ -456,27 +456,27 @@ textarea::placeholder {
     header h1 {
         font-size: 2rem;
     }
-    
+
     .subtitle {
         font-size: 1rem;
     }
-    
+
     textarea {
         height: 250px;
         font-size: 13px;
         padding: 1rem;
     }
-    
+
     .format-button {
         padding: 0.8rem 2rem;
         font-size: 1rem;
     }
-    
+
     .indent-options {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .indent-selector-group select {
         min-width: 120px;
     }
