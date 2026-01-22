@@ -19,25 +19,26 @@ def indent_environments(
     for line in lines:
         stripped = line.strip()
 
-        if stripped.startswith("\\end{verbatim}"):
-            in_verbatim = False
+        if in_verbatim:
+            if stripped.startswith("\\end{verbatim}"):
+                in_verbatim = False
 
-        if in_verbatim and not stripped.startswith("\\end{verbatim}"):
-            new_lines.append(line)
-            continue
+            else:
+                new_lines.append(line)
+                continue
 
         if stripped.startswith("\\end{") and env_stack:
             env_stack.pop()
 
         new_lines.append(indent_str * len(env_stack) + stripped)
+        m = match(r"\\begin\{([^}]+)}", stripped)
 
-        if stripped.startswith("\\begin{"):
-            env_match = match(r"\\begin\{([^}]+)}", stripped)
+        if m:
+            env = m.group(1)
+            env_stack.append(env)
 
-            if env_match:
-                env_name = env_match.group(1)
-                env_stack.append(env_name)
-                in_verbatim = True if env_name == "verbatim" else in_verbatim
+            if env == "verbatim":
+                in_verbatim = True
 
     return new_lines
 
@@ -55,7 +56,6 @@ def indent_section_level(
     for line in lines:
         stripped = line.strip()
 
-        # Track verbatim environment state
         in_verbatim = (
             True
             if stripped.startswith("\\begin{verbatim}")
@@ -66,7 +66,6 @@ def indent_section_level(
             )
         )
 
-        # If we're inside verbatim, preserve the line exactly
         if (
             in_verbatim
             and not stripped.startswith("\\begin{verbatim}")
@@ -75,7 +74,6 @@ def indent_section_level(
             new_lines.append(line)
             continue
 
-        # Count current indentation in terms of indent_str units
         current_line_lstripped = line.lstrip(" \t")
         current_indent_chars = len(line) - len(current_line_lstripped)
 
@@ -176,17 +174,14 @@ def main() -> None:
     with open(args.file, "r", encoding="utf-8") as f:
         latex_code = f.read()
 
-    # Format the code
     formatted_code = indent_latex(latex_code, indent_str)
 
     if args.in_place:
-        # Create backup if requested
         if args.backup:
             backup_file = args.file + ".bak"
             copy2(args.file, backup_file)
             print(f"Backup created: {backup_file}")
 
-        # Write formatted code back to the file
         with open(args.file, "w", encoding="utf-8") as f:
             f.write(formatted_code)
 
