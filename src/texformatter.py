@@ -5,6 +5,8 @@ from functools import reduce
 from re import match
 from shutil import copy2
 
+# TODO: Make a final pass that cleans up multiple blank lines and trims trailing spaces
+
 
 def indent_environments(
     lines: list[str], indent_str: str = "    "
