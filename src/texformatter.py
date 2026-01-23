@@ -135,7 +135,9 @@ def final_cleanup(lines: list[str]) -> list[str]:
     return cleaned
 
 
-def indent_latex(code: str, indent_str: str = "    ") -> str:  # TODO: rewrite in such a way that doesn't shadow `lines`
+def indent_latex(
+    code: str, indent_str: str = "    "
+) -> str:  # TODO: rewrite in such a way that doesn't shadow `lines`
     """Main Function: Indent LaTeX Code"""
     lines = reduce(
         lambda lines, level: indent_section_level(
