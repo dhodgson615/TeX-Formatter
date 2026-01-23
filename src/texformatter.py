@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from argparse import ArgumentParser
-from functools import reduce
 from re import match
 from shutil import copy2
+from functools import reduce
 
 
 def indent_environments(
@@ -56,21 +56,17 @@ def indent_section_level(
     for line in lines:
         stripped = line.strip()
 
-        in_verbatim = (
-            True
-            if stripped.startswith("\\begin{verbatim}")
-            else (
-                False
-                if stripped.startswith("\\end{verbatim}")
-                else in_verbatim
-            )
-        )
+        if stripped.startswith("\\begin{verbatim}"):
+            in_verbatim = True
+            new_lines.append(line)
+            continue
 
-        if (
-            in_verbatim
-            and not stripped.startswith("\\begin{verbatim}")
-            and not stripped.startswith("\\end{verbatim}")
-        ):
+        if in_verbatim:
+            if stripped.startswith("\\end{verbatim}"):
+                in_verbatim = False
+                new_lines.append(line)
+                continue
+
             new_lines.append(line)
             continue
 
@@ -83,32 +79,33 @@ def indent_section_level(
             else 0
         )
 
-        new_indent_level, in_section = (
-            (current_indent_level, True)
-            if stripped.startswith(command)
-            else (
-                (
-                    (current_indent_level, False)
-                    if (
-                        any(stripped.startswith(cmd) for cmd in exit_commands)
-                        or stripped == "\\end{document}"
-                    )
-                    else (current_indent_level + 1, in_section)
-                )
-                if in_section
-                else (current_indent_level, in_section)
-            )
-        )
+        if stripped.startswith(command):
+            new_indent_level = current_indent_level
+            in_section = True
+
+        elif in_section:
+            if (
+                any(stripped.startswith(cmd) for cmd in exit_commands)
+                or stripped == "\\end{document}"
+            ):
+                new_indent_level = current_indent_level
+                in_section = False
+
+            else:
+                new_indent_level = current_indent_level + 1
+
+        else:
+            new_indent_level = current_indent_level
 
         new_lines.append(indent_str * new_indent_level + stripped)
 
     return new_lines
 
 
-def final_cleanup(lines: list[str]) -> list[str]:
-    """Trim trailing spaces and collapse multiple blank lines into one.
-    Also remove leading/trailing blank lines."""
-    cleaned: list[str] = []
+def collapse_and_trim_lines(lines: list[str]) -> list[str]:
+    """Trim trailing spaces from each line and collapse multiple
+    consecutive blank lines into one."""
+    result: list[str] = []
     blank_count = 0
 
     for line in lines:
@@ -118,11 +115,18 @@ def final_cleanup(lines: list[str]) -> list[str]:
             blank_count += 1
 
             if blank_count <= 1:
-                cleaned.append("")
+                result.append("")
 
         else:
             blank_count = 0
-            cleaned.append(line)
+            result.append(line)
+
+    return result
+
+
+def trim_edge_blank_lines(lines: list[str]) -> list[str]:
+    """Remove leading and trailing blank lines from the list."""
+    cleaned = lines[:]
 
     while cleaned and cleaned[0] == "":
         cleaned.pop(0)
@@ -133,32 +137,62 @@ def final_cleanup(lines: list[str]) -> list[str]:
     return cleaned
 
 
-def indent_latex(
-    code: str, indent_str: str = "    "
-) -> str:  # TODO: rewrite in such a way that doesn't shadow `lines`
-    """Main Function: Indent LaTeX Code"""
-    lines = reduce(
-        lambda lines, level: indent_section_level(
-            list(lines), level[0], level[1], indent_str
+def final_cleanup(
+    lines: list[str],
+) -> list[str]:
+    """Trim trailing spaces, collapse multiple blank lines into one,
+    and remove leading/trailing blank lines by delegating to focused helpers.
+    """
+    collapsed = collapse_and_trim_lines(lines)
+    trimmed = trim_edge_blank_lines(collapsed)
+    return trimmed
+
+
+def split_into_lines(code: str) -> list[str]:
+    """Split code into lines without adding an extra trailing empty line."""
+    return code.splitlines()
+
+
+def get_section_levels() -> list[tuple[str, list[str]]]:
+    """Return the ordered section levels and their exit commands."""
+    return [
+        ("\\chapter", ["\\chapter", "\\section"]),
+        ("\\section", ["\\chapter", "\\section"]),
+        ("\\subsection", ["\\chapter", "\\section", "\\subsection"]),
+        (
+            "\\subsubsection",
+            ["\\chapter", "\\section", "\\subsection", "\\subsubsection"],
         ),
-        [
-            ("\\chapter", ["\\chapter", "\\section"]),
-            ("\\section", ["\\chapter", "\\section"]),
-            ("\\subsection", ["\\chapter", "\\section", "\\subsection"]),
-            (
-                "\\subsubsection",
-                [
-                    "\\chapter",
-                    "\\section",
-                    "\\subsection",
-                    "\\subsubsection",
-                ],
-            ),
-        ],
-        indent_environments(code.split("\n"), indent_str),
+    ]
+
+
+def apply_environment_indentation(
+    lines: list[str], indent_str: str
+) -> list[str]:
+    """Apply environment-based indentation first (begin/end, verbatim
+    handling)."""
+    return indent_environments(lines, indent_str)
+
+
+def apply_section_indents(lines: list[str], indent_str: str) -> list[str]:
+    """Apply section/subsection indentation levels in order using a
+    single reduce.
+    """
+    return reduce(
+        lambda acc, pair: indent_section_level(
+            acc, pair[0], pair[1], indent_str
+        ),
+        get_section_levels(),
+        lines,
     )
 
-    cleaned = final_cleanup(list(lines))
+
+def indent_latex(code: str, indent_str: str = "    ") -> str:
+    """Main Function: Indent LaTeX Code"""
+    src_lines = split_into_lines(code)
+    env_indented = apply_environment_indentation(src_lines, indent_str)
+    section_indented = apply_section_indents(env_indented, indent_str)
+    cleaned = final_cleanup(section_indented)
     return "\n".join(cleaned)
 
 
