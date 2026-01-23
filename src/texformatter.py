@@ -107,30 +107,59 @@ def indent_section_level(
     return new_lines
 
 
-def indent_latex(code: str, indent_str: str = "    ") -> str:
+def final_cleanup(lines: list[str]) -> list[str]:
+    """Trim trailing spaces and collapse multiple blank lines into one.
+    Also remove leading/trailing blank lines."""
+    cleaned: list[str] = []
+    blank_count = 0
+
+    for line in lines:
+        line = line.rstrip()
+
+        if line == "":
+            blank_count += 1
+
+            if blank_count <= 1:
+                cleaned.append("")
+
+        else:
+            blank_count = 0
+            cleaned.append(line)
+
+    while cleaned and cleaned[0] == "":
+        cleaned.pop(0)
+
+    while cleaned and cleaned[-1] == "":
+        cleaned.pop()
+
+    return cleaned
+
+
+def indent_latex(code: str, indent_str: str = "    ") -> str:  # TODO: rewrite in such a way that doesn't shadow `lines`
     """Main Function: Indent LaTeX Code"""
-    return "\n".join(
-        reduce(
-            lambda lines, level: indent_section_level(
-                list(lines), level[0], level[1], indent_str
-            ),
-            [
-                ("\\chapter", ["\\chapter", "\\section"]),
-                ("\\section", ["\\chapter", "\\section"]),
-                ("\\subsection", ["\\chapter", "\\section", "\\subsection"]),
-                (
+    lines = reduce(
+        lambda lines, level: indent_section_level(
+            list(lines), level[0], level[1], indent_str
+        ),
+        [
+            ("\\chapter", ["\\chapter", "\\section"]),
+            ("\\section", ["\\chapter", "\\section"]),
+            ("\\subsection", ["\\chapter", "\\section", "\\subsection"]),
+            (
+                "\\subsubsection",
+                [
+                    "\\chapter",
+                    "\\section",
+                    "\\subsection",
                     "\\subsubsection",
-                    [
-                        "\\chapter",
-                        "\\section",
-                        "\\subsection",
-                        "\\subsubsection",
-                    ],
-                ),
-            ],
-            indent_environments(code.split("\n"), indent_str),
-        )
+                ],
+            ),
+        ],
+        indent_environments(code.split("\n"), indent_str),
     )
+
+    cleaned = final_cleanup(list(lines))
+    return "\n".join(cleaned)
 
 
 def main() -> None:
