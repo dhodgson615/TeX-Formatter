@@ -197,7 +197,7 @@ def indent_latex(code: str, indent_str: str = "    ") -> str:
 
 
 def main() -> None:
-    """Main function for the LaTeX formatter."""
+    """Main function for the LaTeX formatter"""
     parser = ArgumentParser(
         description="Format LaTeX source code with proper indentation."
     )
