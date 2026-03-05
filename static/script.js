@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Get selected indent option from dropdowns
         const indentNumber = parseInt(elements.indentNumber.value);
         const indentType = elements.indentType.value;
-        
+
         let indentStr;
         if (indentType === 'tabs') {
             indentStr = '\t';
@@ -184,16 +184,16 @@ E = mc^2
         // Check for saved theme preference or default to system preference
         const savedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
+
         let currentTheme;
         if (savedTheme) {
             currentTheme = savedTheme;
         } else {
             currentTheme = systemPrefersDark ? 'dark' : 'light';
         }
-        
+
         setTheme(currentTheme);
-        
+
         // Listen for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             if (!localStorage.getItem('theme')) {
