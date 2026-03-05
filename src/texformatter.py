@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from argparse import ArgumentParser
+from functools import reduce
 from re import match
 from shutil import copy2
-from functools import reduce
 
 
 def indent_environments(
