@@ -1,3 +1,5 @@
+![Build Status](https://github.com/dhodgson615/TeX-Formatter/actions/workflows/pytest.yml/badge.svg)
+
 # TeX-Formatter
 
 Python script that automatically formats .tex files based on my somewhat
